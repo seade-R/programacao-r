@@ -4,7 +4,7 @@ Um dos aspectos mais incríveis da linguagem R é o desenvolvimento de novas fun
 
 Há diversas "gramática para bases de dados", ou seja, formas de importar, organizar, manipular e extrair informações das bases de dados, que foram desenvolvidas ao longo da última década.
 
-A "gramática" mais popular da linguagem é a do no pacote _dplyr_, parte do _tidyverse_. Neste oficina veremos como utilizar algumas das principais funções, ou "verbos", do pacote _dplyr_.
+A "gramática" mais popular da linguagem é a do no pacote _dplyr_, parte do _tidyverse_. Neste primeiro tutorial veremos como utilizar algumas das principais funções, ou "verbos", do pacote _dplyr_. Começaremos com os verbos _rename_, para renomear variáveis, _select_ para selecionar colunas (variáveis) e _filter_ para selecionar linhas. 
 
 Existem outras formas de se trabalhar com conjuntos de dados mais, digamos, antigas. É comum encontrarmos códigos escritos na "gramática" original da linguagem, que chamaremos de "base" ou "básico".
 
@@ -22,7 +22,7 @@ Em primeiro lugar, vamos instalar um pacote. Começaremos com o tidyverse:
 install.packages('tidyverse')
 ```
 
-Pronto. Seu computador (ou seu usuário no servidor RStudio) tem o pacote _tidyverse_ instalado.
+Pronto. Seu computador (ou seu usuário no servidor RStudio) tem o pacote _tidyverse_ instalado (e ele contém o pacote _dplyr_).
 
 Lembre-se de colocar aspas no nome do pacote, pois, até agora, _tidyverse_ é um nome desconhecido para a linguagem R no seu computador. E qualquer texto arbitrário deve vir entre aspas.
 
@@ -46,12 +46,12 @@ Por esta razão, em vez de aprender como fazer aritmética, elaborar funções o
 
 As principais características de um data frame são: (1) cada coluna representa uma variável (ou característica) de um conjunto de observações; (2) cada linha representa uma observação e contém os valores de cada variável para tal observação. Vejamos um exemplo:
   
-  | Município             | Área (km2)| População | 
-  | --------------------- | ---------:| ---------:|
-  | Santo André           |    175,78 |   693.867 | 
-  | São Bernardo do Campo |    409,53 |   812.086 | 
-  | São Caetano do Sul    |     15,33 |   151.244 | 
-  | Diadema               |     30.73 |   404.477 | 
+| Município             | Área (km2)| População | 
+| --------------------- | ---------:| ---------:|
+| Santo André           |    175,78 |   693.867 | 
+| São Bernardo do Campo |    409,53 |   812.086 | 
+| São Caetano do Sul    |     15,33 |   151.244 | 
+| Diadema               |     30.73 |   404.477 | 
   
 Fonte: SEADE
 
@@ -135,7 +135,7 @@ Ao utilizarmos o símbolo de atribuição criamos um _objeto_. R é uma linguage
 
 O 'importarmos' os dados da PIESP criamos um objeto com um nome arbitrário (escolhemos 'piesp' para facilitar) em nosso ambiente. Na aba 'Environment' do RStudio podemos visualizar todos os objetos existentes. 'piesp' está lá, com alguma informação sobre o que é e qual é o seu tamanho. Dê um clique (aaaaaaargh!) no botão azul ao lado do nome do objeto conseguimos ver um pouco de sua estrutura.
 
-### Explorando sem olhar para a matriz de dados
+### Explorando a matriz de dados sem olhar diretamente para ela 
 
 No editor de planilhas estamos acostumados a ver os dados, célula a célula. Mas será que é realmente útil ficar olhando para os dados? Você perceberá com o tempo que olhar os dados é desnecessário e até contraproducente.
 
@@ -147,7 +147,7 @@ View(piesp)
 
 Ao lado da aba do script no qual você está trabalhando aparecerá uma aba com a matriz de dados da PIESP. Vamos aproveitar para entender o que são esses dados.
 
-O SEADE disponibiliza a informação detalhada de todos os investimentos anunciados por empresas privadas em públicas de São Paulo (1) captados na imprensa e (2) confirmados em contato com as empresas. O dado que carregamos para nossa atividade é o de investimentos confirmados de 2012 até o dia 03 de Agosto de 2020.
+O SEADE disponibiliza a informação detalhada de todos os investimentos anunciados por empresas privadas em públicas de São Paulo (1) captados na imprensa e (2) confirmados em contato com as empresas. O dado que carregamos para nossa atividade é o de investimentos confirmados de 2012 até o dia 03 de Agosto de 2020. A versão dos dados é uma modificação da original (sem acentos nos textos e com colunas de valores em formato numérico) realizada para fins didáticos.
 
 Cada linha representa um investimento confirmado e temos, resumidamente, informações sobre a data e tipo do investimento, a empresa investidora e sua atividade econômica, o valor investido, o local da empresa.
 
@@ -178,7 +178,6 @@ names(piesp)
 ```
 
 Há diversas maneiras de examinarmos os dados sem olharmos diretamente para a matriz de dados. Habitue-se a usar as funções que acabamos de conhecer quando abrir um novo conjunto de dados.
-
 
 ## Pausa para um comentário
 
@@ -232,273 +231,191 @@ glimpse(piesp)
 
 Vamos agora renomear os dados.
 
+## NA quer dizer 'missing'
+
+O símbolo _NA_ em R quer dizer valor faltante (missing value). Na coluna de valores dos investimentos há diversos NA. Isso quer dizer que não temos a informação daquela variável para aquela observação. 
+
 ## Renomeando variáveis
 
-Quando trabalhamos com dados que não coletamos, em geral, não vamos gostar dos nomes das variáveis que quem produziu os dados escolheu. Mais ainda, com certa frequência, obtemos dados cujos nomes das colunas são compostos ou contêm acentuação, cecedilha e demais caracteres especiais. Dá um tremendo trabalho usar nomes com tais característica, apesar de possível. O ideal é termos nomes sem espaço (você pode usar ponto ou subscrito para separar palavras em um nome composto) e que contenham preferencialmente letras minísculas sem acento e números.
+Quando trabalhamos com dados que não coletamos, em geral, não vamos gostar dos nomes das variáveis que quem produziu os dados escolheu. Mais ainda, com certa frequência, obtemos dados cujos nomes das colunas são compostos ou contêm acentuação, cecedilha e demais caracteres especiais, como no caso da PIESP. Dá um tremendo trabalho usar nomes com tais característica, apesar de possível. O ideal é termos nomes sem espaço (você pode usar ponto ou subscrito para separar palavras em um nome composto) e que contenham preferencialmente letras minísculas sem acento e números.
 
 Vamos começar renomeando algumas variáveis no nosso banco de dados, cujos nomes vemos com o comando abaixo:
   
-  ```{r}
-names(escolas)
+```{r}
+names(piesp)
 ```
 
-O primeiro argumento da função _rename_ deve ser a base de dados cujos nomes das variáveis serão renomeados. Depois da primeira vírgula, inserimos todos as modificações de nomes, novamente separadas por vírgulas, e da seguinte maneira. Exemplo: nome\_novo = nome\_velho. Exemplo: nome\_novo = Nome_Velho. Veja o exemplo, em que damos novos nomes às variáveis "tipoesc", "latitute" e "longitude":
+O primeiro argumento da função _rename_ deve ser a base de dados cujos nomes das variáveis serão renomeados. Depois da primeira vírgula, inserimos todos as modificações de nomes, novamente separadas por vírgulas, e da seguinte maneira. Exemplo: nome\_novo = Nome_Velho. Veja o exemplo, em que damos novos nomes às variáveis "Ano", "Real (em milhoes)" e "Tipo Investimento":
   
-  ```{r}
-escolas <- rename(escolas, tipo = tipoesc, lat = latitude, lon = longitude)
+```{r}
+piesp <- rename(piesp, ano = Ano, valor = `Real (em milhoes)`, tipo = `Tipo Investimento`)
 ```
 
 Simples, não? 
-  
-  ## Uma gramática, duas formas
-  
-  No _tidyverse_, existe uma outra sintaxe para executar a mesma tarefa de (re)nomeação. Vamos olhar para ela (lembre-se de carregar novamente os dados, pois os nomes velhos já não existem mais e não existe Ctrl+Z em R):
-  
-  ```{r, eval = F}
-escolas <- read_csv2(url_escolas)
 
-escolas <- escolas %>%
-  rename(tipo = tipoesc,
-         lat = latitude,
-         lon = longitude)
+No caso de nomes com mais de uma palavra ou espaços, é preciso colocar o texto entre dois acentos graves (crase) para sabermos onde começa e onde termina o nome da variável.
+  
+## Uma gramática, duas formas
+  
+No _tidyverse_, existe uma outra sintaxe para executar a mesma tarefa de (re)nomeação. Vamos olhar para ela (lembre-se de carregar novamente os dados, pois os nomes velhos já não existem mais e não existe Ctrl+Z em R):
+  
+```{r}
+piesp <- read_csv2('https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp.csv')
+
+piesp <- piesp %>% 
+  rename(ano = Ano,
+         valor = `Real (em milhoes)`,
+         tipo = `Tipo Investimento`)
 ```
 
 Usando o operador %>%, denominado _pipe_, retiramos de dentro da função _rename_ o banco de dados cujas variáveis serão renomeadas. As quebras de linha depois do %>% e dentro da função _rename_ são opcionais. Porém, o pardão é 'verticalizar o código' e colcar os 'verbos' à esquerda, o que torna sua leitura mais confortável.
 
 Compare com o código que havíamos executado anteriormente:
   
-  ```{r, eval = F}
-escolas <- read_csv2(url_escolas)
+```{r}
+piesp <- read_csv2('https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp.csv')
 
-escolas <- rename(escolas, tipo = tipoesc, lat = latitude, lon = longitude)
+piesp <- rename(piesp, ano = Ano, valor = `Real (em milhoes)`, tipo = `Tipo Investimento`)
 ```
 
 Essa outra sintaxe tem uma vantagem grande sobre a anterior: ela permite emendar uma operação de transformação do banco de dados na outra. Veremos adiante como fazer isso. Por enquanto, tenha em mente que o resultado é o mesmo para qualquer uma das duas formas.
 
-Vamos trabalhar com várias variáveis (sic) de uma única vez. Reabra o banco de dados:
+Vamos trabalhar com mais variáveis de uma única vez. Reabra os dados para que tenhamos uma versão não renomeada:
   
-  ```{r, include = F, echo=F}
-escolas <- read_csv2(url_escolas)
+```{r}
+piesp <- read_csv2('https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp.csv')
 ```
 
-Renomeie as variáveis "dre", "codesc", "tipoesc", "nomesc", "diretoria", "latitude", "longitude" e "codinep".
+E renomeie as variáveis "Ano", "Real (em milhoes)" e "Tipo Investimento" e mais 4 de sua escolha. Um exemplo: 
 
-```{r, include = F, echo=F}
-escolas <- escolas %>%
-  rename(dre_abreviatura = dre,
-         codigo = codesc,
-         tipo = tipoesc,
-         nome = nomesc,
-         dre = diretoria,
-         lat = latitude,
-         lon = longitude,
-         codigo_inep = codinep)
+```{r}
+piesp <- piesp %>% 
+  rename(ano = Ano,
+         empresa_alvo = `Empresa alvo do investimento`,
+         empresa_investidora = `Empresa(s) investidora(s)`,
+         valor = `Real (em milhoes)`,
+         valor_dolar = `Dolar (em milhoes)`,
+         munic = Municipio,
+         tipo = `Tipo Investimento`)
 ```
 
 ## Selecionando colunas
 
-Algumas colunas podem ser dispensáveis em nosso banco de dados a depender da análise. Por exemplo, pode ser que nos interessem apenas as variáveis que já renomeamos. Para selecionar um conjunto de variáveis, utilizaremos o segundo verbo do _dplyr_ que aprenderemos: _select_
+Algumas colunas podem ser dispensáveis em nossos dados a depender da análise ou do que se quer exportar. Por exemplo, pode ser que nos interessem apenas as variáveis que já renomeamos. Para selecionar um conjunto de variáveis, utilizaremos o segundo verbo do _dplyr_ que aprenderemos: _select_
 
 ```{r}
-escolas <- select(escolas, dre_abreviatura, codigo, tipo, nome, dre, lat, lon, codigo_inep)
+piesp <- select(piesp, ano, valor, tipo)
 ```
 
 ou usando o operador %>%, chamado __pipe__,
 
 ```{r}
-escolas <- escolas %>%
-  select(dre_abreviatura,
-         codigo,
-         tipo,
-         nome,
-         dre,
-         lat,
-         lon,
-         codigo_inep)
+piesp <- piesp %>%
+  select(ano,
+         valor,
+         tipo)
 ```
 
 ## Operador %>% para "emendar" tarefas
 
-O que o operador __pipe__ faz é simplesmente colocar o primeiro argumento da função (no caso acima, o _data frame_), fora e antes da própria função. Ele permite lermos o código, informalmente, da seguinte maneira: "pegue o data frame x e aplique a ele esta função". Veremos abaixo que podemos fazer uma cadeia de operações ("pipeline"), que pode ser lida informalmente como: "pegue o data frame x e aplique a ele esta função, e depois essa, e depois essa outra, etc".
+O que o operador __pipe__ faz é simplesmente colocar o primeiro argumento da função (no caso acima, o _data frame_), fora e antes da própria função. Ele permite lermos o código (informalmente) da seguinte maneira: "pegue o data frame x e aplique a ele esta função". Veremos abaixo que podemos fazer uma cadeia de operações ("pipeline"), que pode ser lida (informalmente) como: "pegue o data frame x e aplique a ele esta função, e depois essa, e depois essa outra, etc".
 
 A grande vantagem de trabalharmos com o operador %>% é não precisar repetir o nome do _data frame_ diversas vezes ao aplicarmos a ele um conjunto de operações.
 
 Vejamos agora como usamos o operador %>% para "emendar" tarefas, começando da abertura desde dados. Note que o primeiro input é o url da base de dados e, que, uma vez carregados, vai sendo transformado a cada novo verbo.
 
 ```{r}
-escolas <- read_csv2(url_escolas) %>%
-  rename(dre_abreviatura = dre,
-         codigo = codesc,
-         tipo = tipoesc,
-         nome = nomesc,
-         dre = diretoria,
-         lat = latitude,
-         lon = longitude,
-         codigo_inep = codinep)  %>%
-  select(dre_abreviatura,
-         codigo,
-         tipo,
-         nome,
-         dre,
-         lat,
-         lon,
-         codigo_inep)
+piesp <- read_csv2('https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp.csv') %>% 
+  rename(ano = Ano,
+         empresa_alvo = `Empresa alvo do investimento`,
+         empresa_investidora = `Empresa(s) investidora(s)`,
+         valor = `Real (em milhoes)`,
+         valor_dolar = `Dolar (em milhoes)`,
+         munic = Municipio,
+         tipo = `Tipo Investimento`) %>%
+  select(ano,
+         valor,
+         tipo)
+
 ```
 
-Em uma única sequência de operações, abrimos os dados, alteramos os nomes das variáveis e selecionamos as que permaneceriam no banco de dados. Esta forma de programa, tenha certeza, é bastante mais econômica e mais fácil de ler, para que possamos identificar erros mais facilmente.
-
-## Transformando variáveis
-
-Usaremos a função _mutate_ para operar transformações nas variáveis existentes e criar variáveis novas. Há inúmeras transformações possíveis e elas lembram bastante as funções de outros softwares, como MS Excel. Vamos ver algumas das mais importantes.
-
-No nosso caso, o formato dos valores de latitude e longitude estão em formato diferente do convenional. Latitudes são representadas por números entre -90 e 90, com 8 casas decimais, e Longitudes por números entre -180 e 180, também com 8 casas decimais. Em nosso par de variáveis, latitude está sem separador de decimal está omitido. Faremos a correção divindo latitude por 1 milhão.
-
-No caso de longitude, a situação é ainda pior. Há vários separadores e a variável foi lida como texto. Teremos que limpar todos os separadores, transformar a variável em número e, ao final, dividir por 1 milhão para colocar o separador no lugar certo.
-
-```{r}
-escolas <- escolas %>% 
-  mutate(lat = lat / 1000000, 
-         lon = str_replace_all(lon, "\\.", ""),
-         lon = as.numeric(lon),
-         lon = lon / 1000000) 
-```
-
-Como utilizamos os nomes das próprias variáveis à esquerda da operação de transformação, produziremos uma substituição e não haverá novas colunas na base de dados.
-
-Voltaremos ao verbo _mutate_ no próximo tutorial e no exemplos abaixo. 
+Em uma única sequência de operações, abrimos os dados, alteramos os nomes das variáveis e selecionamos as que permaneceriam no banco de dados. Esta forma de programa, tenha certeza, é bastante mais econômica e mais fácil de ler.
 
 ## Filtrando linhas
 
-Por vezes, queremos trabalhar apenas com um conjunto de linhas do nosso banco de dados. Por exemplo, se quisermos selecionar apenas escolas municipais de educação infantil, utilizamos o verbo 'filter' com a condição desejada. Note que estamos criando um novo data frame (ou seja, um novo objeto) que contém a seleção de linhas produzida:
+Por vezes, queremos trabalhar apenas com um conjunto de linhas do nosso banco de dados. Por exemplo, se quisermos selecionar apenas os investimentos confirmados em 2019, utilizamos o verbo 'filter' com a condição desejada para restringir o número de linhas. 'Filtrar' é selecionar linhas de acordo com os valores de algumas variáveis.
+
+Note que agora vamos criar um novo data frame (ou seja, um novo objeto) que contém a seleção de linhas produzida em vez de sobrescrever na memória o data frame anterior:
   
-  ```{r}
-emeis <- escolas %>% 
-  filter(tipo == "EMEI")
+```{r}
+piesp19 <- piesp %>% 
+  filter(ano == 2019)
 ```
 
-Além da igualdade, poderíamos usar outros símbolos: maior (>). maior ou igual (>=), menor (<), menor ou igual (<=) e diferente (!=) para selecionar casos. Para casos de _NA_, podemos usar a função is.na(), pois a igualdade '== NA' é inválida em R.
+Além da igualdade, poderíamos usar outros símbolos: maior (>). maior ou igual (>=), menor (<), menor ou igual (<=) e diferente (!=) para selecionar casos. Para casos de _NA_, podemos usar a função is.na (ou o seu negativo, !is.na), pois a igualdade '== NA' é inválida em R (veremos um exemplo adiante).
 
-Vamos supor agora que todos centros de educação infantil (creche) da rede direta, indireta e conveniada. Como combinar condições?
+Vamos supor agora que queremos os anos de 2016 a 2018. Há mais de uma maneira de gerar essa seleção de linhas:
   
-  ```{r}
-creches <- escolas %>% 
-  filter(tipo == "CEI DIRET" | tipo == "CEI INDIR" | tipo == "CR.P.CONV")
+
+```{r}
+piesp1518 <- piesp %>% 
+  filter(ano == 2017 | ano == 2017 | ano == 2018)
 ```
 
 Note que, para dizer que para combinarmos as condições de seleção de linha, utilizamos uma barra vertical. A barra é o símbolo "ou", e indica que todas as observações que atenderem a uma ou outra condição serão incluídas.
 
-Vamos supor que queremos estabelecer agora condições para a seleção de linhas a partir de duas variáveis. Por exemplo, queremos incluir as mesmas escolas já escolhidas e que também sejam da Diretoria Regional do Ipiranga. O símbolo da conjunção "e" é "&". Veja como utilizá-lo:
-  
-  ```{r}
-creches <- escolas %>% 
-  filter(tipo == "CEI DIRET" | 
-           tipo == "CEI INDIR" | 
-           tipo == "CR.P.CONV")
-
-```
-
-Ao usar duas variáveis diferentes para filter e a conjunção "e", podemos escrever o comando separando as condições por vírgula e dispensar o operador "&":
-  
-  ```{r}
-creches_ipiranga <- escolas %>% 
-  filter((tipo == "CEI DIRET" | 
-            tipo == "CEI INDIR" | 
-            tipo == "CR.P.CONV"),
-         dre == "DIRETORIA REGIONAL DE EDUCACAO IPIRANGA")
-```
-
-Você pode combinar quantas condições precisar. Se houver ambiguidade quanto à ordem das condições, use parênteses, como fizemos acima.
-
-Vamos uma aplicação interessante dos dados com os quais trabalhamos.
-
-## Produzindo mapas no R
-
-Criamos acima um data frame que contém apenas centros de educação infantil com a informação de latitude e longitude já corrigida. Conseguimos "reduzir" e alterar os dados usando quatro "verbos" (funções) fundamentais de manipulação de dados: _rename_, _select_, _mutate_ e _filter_.
-
-Precisaremos do pacote _ggmap_ e _osmdata_ para "importar" mapas de rua de serviços da web (Google e Open Street Maps, por exemplo) para, depois, fazer a combinação dos mapas com os pontos (escolas, a partir da latitude e longitude).
+Outra maneira de escrever a mesma condição é:
 
 ```{r}
-# install.packages('osmdata')
-# install.packages('ggmap')
-library(ggmap)
-library(osmdata)
+piesp1518 <- piesp %>% 
+  filter(ano >= 2015 & ano <= 2018)
 ```
 
-Sem entrar em detalhes, vamos utilizar as funções _get\_map_ e _getbb_ para obter um mapa sobre o qual inseriremos nossos pontos.
+Neste caso, utilizamos "&", que é o símbolo da conjunção "e".
+ 
+Vamos supor que queremos estabelecer agora condições para a seleção de linhas a partir de duas variáveis. Por exemplo, queremos apenas os investimentos cujo tipo é 'Implantacao' para os anos de 2016 a 2018. Novamente, precisaremos da conjunção "&" 
+  
+```{r}
+piesp1518_implantacao <- piesp %>% 
+  filter(ano >= 2015 & ano <= 2018 & tipo == Implantacao)
+```
+Ao usar duas variáveis diferentes para filter e a conjunção "e", podemos escrever o comando separando as condições por vírgula e dispensar o operador "&" (a quebra de linha é opcional):
+  
+```{r}
+piesp1518_implantacao <- piesp %>% 
+  filter(ano >= 2015,
+         ano <= 2018,
+         tipo == Implantacao)
+```
+
+Você pode combinar quantas condições precisar. Se houver ambiguidade quanto à ordem das condições, use parênteses.
+
+Se a seleção de linhas envolver excluir ou manter observações com NA, precisamos utilizar a função is.na. Por exemplo, para excluir todas os investimentos cujo tipo é desconhecido fazemos (o sinal de exclamação serve para inverter a operação):
 
 ```{r}
-map_sp <- get_map(getbb("Sao Paulo"), 
-                  maptype = "toner-background",
-                  zoom = 13)
+piesp <- piesp %>% 
+  filter(!is.na(tipo))
 ```
 
-Podemos plotar o mapa que baixamos com a função _plot_:
-  
-  ```{r}
-plot(map_sp)
-```
+## Verbos do dplyr
 
-Mas ainda não é isso que queremos. Precisamos sobrepor ao mapa que baixamos os pontos correspondentes a cada uma dos CEIS. Veja como:
-  
-  ```{r}
-ggmap(map_sp) +
-  geom_point(aes(lon, lat), data = creches)
-```
+Vimos até agora 3 verbos do pacote _dplyr_: _rename_, _select_ e _filter_. Eles tem algumas características em comum:
 
-Legal, não? Não muito bonito, mas estamos no caminho.
+- O primeiro argumento é sempre o data frame que será transformado. Podemos retirar o primeiro argumento de dentro do parênteses se utilizamos o pipe (%>%).
 
-O código acima tem uma estrutura bastante diferente do que havíamos visto. Ele é parte de outra "gramática" do R, a "grammar o graphics" do pacote _ggplot2_. Veremos um pouco sobre ela em outro tutorial, mas vamos tentar destrinchar o código do mapa acima desde já.
+- Dentro do parênteses escrevemos uma lista de transformações utilizando vírgula para separá-las.
 
-Começamos plotando o mapa de São Paulo obtido nas APIs do Open Street Maps e Google com a função _ggmap_. Criamos, assim, a primeira camada do mapa e "organizará" o sistema de coordenadas. Com _geom\_point_, adicionaremos pontos ao mapa. Os pontos vem do data frame "creches" -- por isso "data = creches" -- e a informação utilizada, "lat" e "lon", faz parte da "aesthetics" do mapa -- por isso dentro do parênteses "aes".
+- O resultado é sempre um data frame modificado.
 
-Se você quiser aprender um pouco mais sobre mapas no R (e fazer mapas mais bonitos) [aqui](https://jonnyphillips.github.io/FLS6397_2019/class06.html).
+Há mais 3 outros verbos do _dplyr_ com a mesma característica: _arrange_, que serve para ordenar as linhas por uma ou mais variáveis; _mutate_, utilizado para transformar variáveis ou criar novas; e _summarise_ que serve para reduzir/collapsar os dados a um sumário (por exemplo, calculando média ou outra estatística a partir de uma variável).
+
+Esse conjunto de verbos são os mais utilizados para a manipulação e transformação de dados na gramática do _dplyr_, ademais do _group\_by_, que veremos no tutorial seguinte.
 
 ## Fim
 
-Espero que com este tutorial você tenha se familiarizado com a linguagem R e compreendido como utilizá-la trabalhar com os dados abertos da educação municipal. Organizando o que fizemos em um único "bloco" de cógido, vemos que é preciso pouco código para fazer algo relevante:
-  
-  ```{r}
-library(tidyverse)
-library(ggmap)
-library(osmdata)
+Chegamos ao final do primeiro tutorial. Espero que você tenha se habituado ao uso da interface e começado a assimilar um pouco a linguagem R.
 
-creches <- read_csv2(url_escolas) %>%
-  rename(dre_abreviatura = dre,
-         codigo = codesc,
-         tipo = tipoesc,
-         nome = nomesc,
-         dre = diretoria,
-         lat = latitude,
-         lon = longitude,
-         codigo_inep = codinep)  %>%
-  select(dre_abreviatura,
-         codigo,
-         tipo,
-         nome,
-         dre,
-         lat,
-         lon,
-         codigo_inep) %>% 
-  mutate(lat = lat / 1000000, 
-         lon = str_replace_all(lon, "\\.", ""),
-         lon = as.numeric(lon),
-         lon = lon / 1000000) %>% 
-  filter(tipo == "CEI DIRET" | 
-           tipo == "CEI INDIR" | 
-           tipo == "CR.P.CONV")
+A ideia é começar a usar a linguagem tal como aplicada no quotidiano da análise de dados para depois darmos alguns passos atrás e aprendermos todos os seus fundamentos.
 
-map_sp <- get_map(getbb("Sao Paulo"), 
-                  maptype = "toner-background",
-                  zoom = 13)
-
-ggmap(map_sp) +
-  geom_point(aes(lon, lat), data = creches)
-
-```
-
-
-
-
-
-
+Não é preciso salvar ou exportar nada. Basta seguir para o tutorial seguinte.
 

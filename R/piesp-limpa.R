@@ -20,6 +20,5 @@ piesp <- piesp %>%
     `Real (em milhoes)` = str_replace(`Real (em milhoes)`, ',', '.'),
     `Real (em milhoes)` = as.numeric(`Real (em milhoes)`)
     )
-piesp %>% View
 
 write_csv2(piesp, 'data/piesp.csv')
