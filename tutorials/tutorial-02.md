@@ -8,6 +8,10 @@ Neste tutorial, aprederemos um pouco mais sobre a gramática do _dplyr_ utilizan
 
 Comece carregando o pacote _tidyverse_, que contém o pacote _dplyr_.
 
+```{r}
+library(tidyverse)
+```
+
 ## COVID-19 no Estado de São Paulo
 
 Durante a pandemia de COVID-19 o SEADE passou a dar suporte ao Governo do Estado de São Paulo para a produção, organização e publicização de dados sobre a crise. Uma das bases que o SEADE organizou e levou a público foi a de casos e óbitos por municípios.
@@ -20,12 +24,12 @@ O conjunto de dados contém as seguintes informações:
 |---|---|
 |nome_munic| Nome do município|
 |codigo_ibge| Código do município no IBGE (7 dígitos)|
+|nome_drs| Nome do Dpto. Regional de Saúde|
 |datahora| Data no formato YYYY-MM-DD|
 |casos| Casos totais registrados até a data|
 |casos_novos| Casos novos registrados na data|
 |obitos| Óbitos totais registrados até a data|
 |obitos_novos| Óbitos novos registrados na data|
-|nome_drs| Nome do Dpto. Regional de Saúde|
 |pop| População Estimada (fonte SEADE)|
 
 Cada linha contém, portanto, a infomação de uma combinação de município e data.
@@ -115,7 +119,7 @@ Vamos supor que nos interessa observar os óbitos novos de uma região do Estado
 
 ```{r}
 covid %>%
-  filter(nome == "Grande Sao Paulo") 
+  filter(nome_drs == "Grande Sao Paulo") 
 ```
 Com o comando _pull_, podemos 'retirar' de um data frame uma coluna e tratá-la como um vetor destacado. _pull_ é mais um (de vários) verbos do _dplyr_:
 
@@ -244,3 +248,7 @@ covid_drs %>%
 ```
 
 Simples e útil.
+
+# Fim
+
+Paramos por aqui. Há muito mais sobre o _dplyr_ a aprender, mas já vimos o essencial 

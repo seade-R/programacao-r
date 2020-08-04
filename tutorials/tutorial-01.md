@@ -384,7 +384,7 @@ Vamos supor que queremos estabelecer agora condições para a seleção de linha
   
 ```{r}
 piesp1518_implantacao <- piesp %>% 
-  filter(ano >= 2015 & ano <= 2018 & tipo == Implantacao)
+  filter(ano >= 2015 & ano <= 2018 & tipo == 'Implantacao')
 ```
 Ao usar duas variáveis diferentes para filter e a conjunção "e", podemos escrever o comando separando as condições por vírgula e dispensar o operador "&" (a quebra de linha é opcional):
   
