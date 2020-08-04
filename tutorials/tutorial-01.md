@@ -36,7 +36,7 @@ Pronto!
   
 Antes de avançar, treine com mais outro pacote: _lubridate_, que é um pacote para tratamento de datas e horas. 
 
-# Introdução ao pacote _dplyr_
+# Introdução ao pacote _dplyr_: rename, select e filter
 
 ## Começando pelo meio: data frames
 
@@ -91,8 +91,15 @@ Clique no botão (aaaaaaargh!). Veja que temos a opção de importar arquivos de
 
 Use a segunda opção, "From Text (readr)" para carregar os dados da PIESP.
 
-Note que você pode escolher um arquivo na pasta local ou um URL, ou seja, um arquivo que esteja armazenado na web.
+Note que você pode escolher um arquivo na pasta local ou um URL, ou seja, um arquivo que esteja armazenado na web. O dados da PIESP não estão no seu computador, mas o endereço do repositório do curso: https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp.csv
 
+Cole o URL no campo "File/URL".
+
+A seguir, no campo "Name" digite 'piesp' (minísculo), que é um nome arbitrário que daremos aos nossos dados.
+
+Finalmente, no campo "Delimiter" escolha 'Semicolon' (Ponto e vírgula). Clique em "Import".
+
+Esses são os únicos parâmetros que precisamos alterar ou informar para abrir a PIESP. Para outras bases pode ser necessário fazer outras modificações.
 
 ## Abrindo dados em R (com script)
 
@@ -397,7 +404,7 @@ piesp <- piesp %>%
   filter(!is.na(tipo))
 ```
 
-## Verbos do dplyr
+## Características dos verbos do dplyr
 
 Vimos até agora 3 verbos do pacote _dplyr_: _rename_, _select_ e _filter_. Eles tem algumas características em comum:
 
@@ -407,7 +414,7 @@ Vimos até agora 3 verbos do pacote _dplyr_: _rename_, _select_ e _filter_. Eles
 
 - O resultado é sempre um data frame modificado.
 
-Há mais 3 outros verbos do _dplyr_ com a mesma característica: _arrange_, que serve para ordenar as linhas por uma ou mais variáveis; _mutate_, utilizado para transformar variáveis ou criar novas; e _summarise_ que serve para reduzir/collapsar os dados a um sumário (por exemplo, calculando média ou outra estatística a partir de uma variável).
+Há mais 3 outros verbos do _dplyr_ com as mesmas características: _arrange_, que serve para ordenar as linhas por uma ou mais variáveis; _mutate_, utilizado para transformar variáveis ou criar novas; e _summarise_ que serve para reduzir/collapsar os dados a um sumário (por exemplo, calculando média ou outra estatística a partir de uma variável).
 
 Esse conjunto de verbos são os mais utilizados para a manipulação e transformação de dados na gramática do _dplyr_, ademais do _group\_by_, que veremos no tutorial seguinte.
 
