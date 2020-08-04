@@ -93,13 +93,15 @@ Use a segunda opção, "From Text (readr)" para carregar os dados da PIESP.
 
 Note que você pode escolher um arquivo na pasta local ou um URL, ou seja, um arquivo que esteja armazenado na web. O dados da PIESP não estão no seu computador, mas o endereço do repositório do curso: https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp.csv
 
-Cole o URL no campo "File/URL".
+Cole o URL no campo "File/URL" e clique em 'Update'.
 
 A seguir, no campo "Name" digite 'piesp' (minísculo), que é um nome arbitrário que daremos aos nossos dados.
 
 Finalmente, no campo "Delimiter" escolha 'Semicolon' (Ponto e vírgula). Clique em "Import".
 
 Esses são os únicos parâmetros que precisamos alterar ou informar para abrir a PIESP. Para outras bases pode ser necessário fazer outras modificações.
+
+Se tiver dúvidas, você pode assistir um vídeo sobre como utilizar o botão 'Import Dataset': https://www.youtube.com/watch?v=6y-9_h7okH4
 
 ## Abrindo dados em R (com script)
 
@@ -392,7 +394,7 @@ Ao usar duas variáveis diferentes para filter e a conjunção "e", podemos escr
 piesp1518_implantacao <- piesp %>% 
   filter(ano >= 2015,
          ano <= 2018,
-         tipo == Implantacao)
+         tipo == 'Implantacao')
 ```
 
 Você pode combinar quantas condições precisar. Se houver ambiguidade quanto à ordem das condições, use parênteses.
