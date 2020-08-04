@@ -89,7 +89,10 @@ Se você decidiu aprender a programar em R, provavelmente quer substituir a aná
 
 Clique no botão (aaaaaaargh!). Veja que temos a opção de importar arquivos de texto com duas bibliotecas diferentes, _base_ e _readr_ (que é o pacote de abertura de dados do _tidyverse_) e dados em alguns outros formatos, como MS Excel e outros softwares de análise estatística.
 
-Use a primeira opção, "From Text (base)" para carregar os dados da PIESP.
+Use a segunda opção, "From Text (readr)" para carregar os dados da PIESP.
+
+Note que você pode escolher um arquivo na pasta local ou um URL, ou seja, um arquivo que esteja armazenado na web.
+
 
 ## Abrindo dados em R (com script)
 
@@ -101,30 +104,36 @@ library(tidyverse)
 
 Use o recurso "Import Dataset" enquanto não se sentir confortável com a linguagem. Mas, aos poucos, vá abandonando. Abrir dados em R é muito simples.
 
-Repetindo o procedimento, para abrir o cadastro de escola basta fazer:
+Repetindo o procedimento, para abrir os dados da PIESP basta fazer:
   
-  ```{r}
-escolas <- read_csv2("http://dados.prefeitura.sp.gov.br/pt_PT/dataset/8da55b0e-b385-4b54-9296-d0000014ddd5/resource/e0f7d848-1d35-4ce8-b2b3-20e1196c2076/download/escolas122018.csv")
+```{r}
+piesp <- read_csv2('https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp.csv')
 ```
 
 Em R, as funções "read." são as funções de abertura de dados do _base_ e as funções "read_" são as análogas do pacote _readr_, parte do _tidyverse_. Há funções "read" para abrir todos os tipos de dados, de arquivos de texto a páginas em HTML.
 
-No nosso caso, utilizamos a função _read\_csv2_ para abrir um arquivo de texto cujos valores das colunas são separados por vírgula. Infelizmente, não há tempo para aprender sobre as variedades das funções de abertura de dados, mas você pode aprender um pouco mais [aqui](https://jonnyphillips.github.io/FLS6397_2019/tutorials/tutorial04.html) ou [aqui](https://r4ds.had.co.nz/data-import.html).
+No nosso caso, utilizamos a função _read\_csv2_ para abrir um arquivo de texto cujos valores das colunas são separados por ponto e vírgula. Veremos no futuro e com mais calma outras possibilidades para carregar dados em R.
 
-Note que utilizamos o URL dos dados diretamente. Não precisamos fazer download para uma pasta local para, depois, abrir os dados. 
+Note que utilizamos o URL dos dados diretamente. Não precisamos fazer download para uma pasta local para depois abrir os dados se os dados estiverem na web.
 
-Um jeito mais confortável, na mina opinião, de fazer a abertura de dados com um URL é guardar o URL em um objeto de texto e, depois, utilizar esse objeto como input da função:
+Um jeito mais confortável, na minha opinião, de fazer a abertura de dados com um URL é guardar o URL em um objeto de texto e, depois, utilizar esse objeto como input da função. O resultado é idêntico e você pode testar se quiser.
   
-  ```{r}
-url_escolas <- "http://dados.prefeitura.sp.gov.br/pt_PT/dataset/8da55b0e-b385-4b54-9296-d0000014ddd5/resource/e0f7d848-1d35-4ce8-b2b3-20e1196c2076/download/escolas122018.csv"
-escolas <- read_csv2(url_escolas)
+```{r}
+url_piesp <- "https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp.csv"
+piesp <- read_csv2(url_piesp)
 ```
 
 Note que, pela segunda vez, utilizamos o símbolo "<-". Ele é um símbolo de atribuição, e é um das marcas mais importantes da linguagem. Atribuir, significa "guardar na memória com um nome". O nome, é o que vai do lado esquerdo. A parte do lado direito da equação de atribuição é o objeto a ser guardado.
 
-Você pode usar "=" no lugar de "<-". Mas, avisamos desde já, há casos em que há ambiguidade e os símbolos não funcionam como esperado.
+Você pode usar "=" no lugar de "<-". Mas, aviso desde já, há casos em que há ambiguidade e os símbolos não funcionam como esperado.
 
 Vamos avançar.
+
+### Nossos dados são objetos
+
+Ao utilizarmos o símbolo de atribuição criamos um _objeto_. R é uma linguagem voltada a objetos e, basicamente, tudo que você armazenar na memória do computador é um objeto.
+
+O 'importarmos' os dados da PIESP criamos um objeto com um nome arbitrário (escolhemos 'piesp' para facilitar) em nosso ambiente. Na aba 'Environment' do RStudio podemos visualizar todos os objetos existentes. 'piesp' está lá, com alguma informação sobre o que é e qual é o seu tamanho. Dê um clique (aaaaaaargh!) no botão azul ao lado do nome do objeto conseguimos ver um pouco de sua estrutura.
 
 ### Explorando sem olhar para a matriz de dados
 
@@ -133,77 +142,93 @@ No editor de planilhas estamos acostumados a ver os dados, célula a célula. Ma
 Você pode ver os dados clicando (aaaaaaargh!) no nome do objeto que está no "Environment" ou utilizando a função _View_ (cuidado, o "V" é maiúsculo, algo raro em nomes de funções de R).
 
 ```{r}
-View(escolas)
+View(piesp)
 ```
 
-Agora que carregamos o cadastro de escolas na memória, vamos conhecer um pouco sobre estes dados sem olhar para a matriz de dados.
+Ao lado da aba do script no qual você está trabalhando aparecerá uma aba com a matriz de dados da PIESP. Vamos aproveitar para entender o que são esses dados.
 
-Podemos rapidamente olhar para uma "amostra" dos dados com a função _head_, que nos apresenta as 6 primeiras linhas do conjunto de dados.
+O SEADE disponibiliza a informação detalhada de todos os investimentos anunciados por empresas privadas em públicas de São Paulo (1) captados na imprensa e (2) confirmados em contato com as empresas. O dado que carregamos para nossa atividade é o de investimentos confirmados de 2012 até o dia 03 de Agosto de 2020.
+
+Cada linha representa um investimento confirmado e temos, resumidamente, informações sobre a data e tipo do investimento, a empresa investidora e sua atividade econômica, o valor investido, o local da empresa.
+
+Podemos rapidamente olhar para uma "amostra" dos dados com a função _head_, que nos apresenta as 6 primeiras linhas do conjunto de dados e as primeiras colunas à esquerda.
 
 ```{r}
-head(escolas)
+head(piesp)
 ```
 
-Com apenas as 6 primeiras linhas do data frame temos noção de todo o conjunto. Sabemos rapidamente que existem informações sobre o nome das escolas, seus códigos de cadastro, de que tipo de escola se trata, à qual diretoria regional de ensino (DRE) pertence, etc.
+Com apenas as 6 primeiras linhas do data frame temos noção dos dados. 
 
-Quantas escolas há? Há tantas escolas quantas linhas nos dados. Com _nrow_ descobrimos quantas são.
+Mas quantos investimentos há ao todo no conjunto de dados? Com _nrow_ descobrimos quantas linhas tem nosso data frame.
 
 ```{r}
-nrow(escolas)
+nrow(piesp)
 ```
 
-Quantas informações temos disponíveis para cada escola? Ou seja, quantas variáveis há no conjunto de dados?
+Quantas informações temos disponíveis para cada investimento? Ou seja, quantas variáveis há no conjunto de dados?
   
-  ```{r}
-ncol(escolas)
+```{r}
+ncol(piesp)
 ```
 
-Qual é o nome das variáveis?
+Qual é o nome das variáveis do conjunto de dados?
   
-  ```{r}
-names(escolas)
+```{r}
+names(piesp)
 ```
+
+Há diversas maneiras de examinarmos os dados sem olharmos diretamente para a matriz de dados. Habitue-se a usar as funções que acabamos de conhecer quando abrir um novo conjunto de dados.
+
 
 ## Pausa para um comentário
 
 Podemos fazer comentários no meio do código. Basta usar # e tudo que seguir até o final da linha não será interpertado pelo R como código. Por exemplo:
 
 ```{r}
-# Imprime o nome das variaveis do data frame cadastro
-names(escolas)
+# Imprime o nome das variaveis do data frame da PIESP
+names(piesp)
 
-names(escolas) # Repetindo o comando acima com comentario em outro lugar
+names(piesp) # Repetindo o comando acima com comentario em outro lugar
 ```
 
-Comentários são extremamente úteis para documentar seu código. Documentar é parte de programar e você deve pensar nas pessoas com as quais vai compartilhar o código e no fato de que com certeza não se lembrará do que fez em pouco tempo (garanto, você vai esquecer).
+Comentários são extremamente úteis para documentar seu código. Use e abuse. Documentar é parte de programar e você deve pensar nas pessoas com as quais vai compartilhar o código e no fato de que com certeza não se lembrará do que fez em pouco tempo (garanto, você vai esquecer).
+
+Durante o curso, comente todos os seus scripts.
 
 ## Argumentos ou parâmetros das funções
 
-Note que em todas as funções que utilizamos até agora, _escolas_ está dentro do parênteses que segue o nome da função. Essa __sintaxe__ é característica das funções de R. O que vai entre parêntesis são os __argumentos__ ou __parâmetros__ da função, ou seja, os "inputs" que serão transformados.
+R é uma linguagem. Tem sintaxe, léxico e ortografia. Vamos falar um pouco sobre a sintaxe de R.
 
-Uma função pode receber mais de um argumento. Pode também haver argumentos não obrigatórios, ou seja, para os quais não é necessário informar nada se você não quiser alterar os valores pré-definidos. Por exemplo, a função _head_ contém o argumento _n_, que se refere ao número de linhas a serem __impressas__ na tela, pré-estabelecido em 6 (você pode conhecer os argumentos da função na documentação do R usando _?_ antes do nome da função). Para alterar o parâmetro _n_ para 10, por exemplo, basta fazer:
+Note que em todas as funções que utilizamos até agora, _piesp_ está dentro do parênteses que segue o nome da função. Essa __sintaxe__ é característica das funções de R. O que vai entre parêntesis são os __argumentos__ ou __parâmetros__ da função, ou seja, os "inputs" que serão transformados.
+
+Uma função pode receber mais de um argumento. Pode também haver argumentos não obrigatórios, ou seja, para os quais não é necessário informar nada se você não quiser alterar os valores pré-definidos. Por exemplo, a função _head_ contém o argumento _n_, que se refere ao número de linhas a serem __impressas__ na tela, pré-estabelecido em 6 (você pode conhecer os argumentos da função na documentação do R usando _?_ antes do nome da função). Para alterar o parâmetro _n_ para 20, por exemplo, basta fazer:
   
-  ```{r}
-head(x = escolas, n = 10)
+```{r}
+head(x = piesp, n = 20)
 ```
 
 _x_ é o argumento que já havíamos utilizado anteriormente e indica em que objeto a função _head_ será aplicada. Dica: você pode omitir tanto "x =" quanto "n =" se você já conhecer a ordem de cada argumento no uso da função.
+
+Se essa discussão lhe parecer um pouco confusa, não se preocupe. Voltaremos a ela com alguma frequência e aos poucos vamos nos habituar com os aspectos formais da linguagem. Sigamos.
 
 ## Mais funções para explorar os dados
 
 Todos os objetos em R tem uma estrutura. Você pode investigar essa estrutura utilizando a função _str_. No caso de data frames, o output é legível (para outras classes de objeto isso não é verdade necessariamente):
   
-  ```{r}
-str(escolas)
+```{r}
+str(piesp)
 ```
 
-Há informações sobre o nome das variáveis, dispostas na vertical, tipo de dados (texto -- char -- ou números -- num ou int) e uma amostra das primeiras observações.
+Há informações sobre o nome das variáveis, dispostas na vertical, tipo de dados (texto -- char -- ou números -- num ou int) e uma amostra das primeiras observações. No final há informações sobre a classe das colunas (vetores!) do data frame.
 
-Uma função semelhante, e com resultado um pouco mais "limpo", é _glimpse_, parte do _dplyr_:
+
+Uma função semelhante, e com resultado um pouco mais "limpo", é _glimpse_:
   
-  ```{r}
-glimpse(escolas)
+```{r}
+glimpse(piesp)
 ```
+
+'chr', 'num' ou 'dbl' que aparecem nos outputs dizem respeito aos tipos de dados armazenados em cada vetor. Aprenderemos mais sobre isso no futuro.
 
 Vamos agora renomear os dados.
 
