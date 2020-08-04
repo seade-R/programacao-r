@@ -48,7 +48,7 @@ Dica: examine os últimos dias com tail, que é a versão de 'head' para examina
 
 Uma das tarefas mais comuns na preparação de dados para análise é a transformação de variáveis, seja para alterar uma variável já existente, seja para criar uma nova.
 
-Na gramática do _dplyr_, o verbo que utilizamos para operações com variáveis é _mutate_.
+Na gramática do _dplyr_, o verbo que utilizamos para operações com variáveis é _mutate_. Há inúmeras transformações possíveis e elas lembram bastante as funções de outros softwares, como MS Excel.
 
 Por exemplo, se quisermos criar uma variável de óbitos por COVID-19 acumulados _per capita_ para cada município do Estado de São Paulo, precisamos fazer uma razão entre o total de óbitos acumulados e a população. Vejamos como fazer isso com _mutate_:
 
@@ -70,7 +70,7 @@ covid %>%
 
 Pronto, produzimos um data frame de uma linha que contém o que queríamos observar.
 
-## E o '<-' ?
+## Não faltou o '<-' no código acima?
 
 Repare que não utilizamos o sinal de atribuição, '<-', na nossa última operação. Por não termos utilizado, nenhum objeto foi criado. Em vez disso, o resultado do código apareceu no Console. Foi impresso. E não foi armazenado.
 
@@ -98,8 +98,16 @@ covid %>%
 
 A informação agora é legível: havia 81.2 óbitos por COVID-19 para cada 100 mil habitantes.
 
-Podemos incluir em um único comando de 
+Podemos incluir em um único comando de mutate quantas transformações desejarmos, sempre separadas por vírgula:
 
+```{r}
+covid <- covid %>% 
+  mutate(obitos_pc = (obitos / pop) * 100000,
+         casos_pc = (casos / pop) * 100000,
+         letalidade = obitos / casos)
+```
+
+Em outro momento veremos um conjunto de funções úteis em para transformar variáveis (recodificar, fazer substituições, mudar de tipo, discretizar, etc). Por enquanto, vamos nos concentrar no funcionamento do verbo.
 
 ## Agrupando com _filter_ e _pull_
 
