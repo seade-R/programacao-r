@@ -18,7 +18,7 @@ O curso oferece uma iniciação à lógica de programação e ao uso da linguage
 
 ## Programa
 
-[04-08-2020]() __Manipulação de dados no R e introdução__ - Na primeira aula do curso nos habituaremos à linguagem R trabalhando com uma das gramáticas mais populares de manipulação de dados em R, a do pacote _dplyr_. O curso começa, assim, não pelos elementos básicos da linguagem R, mas pelo seu uso mais comum. Dessa forma, nos habituaremos à linguagem observando seu uso a problemas concretos.
+[04-08-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-01.md) __Manipulação de dados no R e introdução__ - Na primeira aula do curso nos habituaremos à linguagem R trabalhando com uma das gramáticas mais populares de manipulação de dados em R, a do pacote _dplyr_. O curso começa, assim, não pelos elementos básicos da linguagem R, mas pelo seu uso mais comum. Dessa forma, nos habituaremos à linguagem observando seu uso a problemas concretos.
 
 [11-08-2020] __Do básico ao intermediário__ - Após termos aprendido sobre data frames, vamos fazer um percurso das funcionalidades básicas da linguagem até alguns de seus usos intermediários. O objetivo do percurso é criar um repertório de funções e utilidades da linguagem que serão utilizados adiante.
 
