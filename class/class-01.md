@@ -2,7 +2,7 @@
 
 ## Objetivos Gerais
 
-Neste primeiro encontro vamos conhecer o ambiente de programação de R e o software RStudio, bem como seu uso no servidor RStudio do SEADE. A seguir, começaremos o estudo da linguagem R pelo seu uso mais comum: a manipulação de dados.
+Neste primeiro encontro vamos conhecer o ambiente de programação de R e o software RStudio, bem como seu uso no servidor RStudio do SEADE. A seguir, começaremos o estudo da linguagem R pelo seu uso mais comum: a manipulação de dados. Vamos nos habituar à linguagem da melhor maneira possível: usando.
 
 ## Roteiro
 
@@ -11,6 +11,8 @@ Neste primeiro encontro vamos conhecer o ambiente de programação de R e o soft
 2- A primeira experiência de programação no curso será com o [Tutorial 1](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-01.md). Diferentemente de cursos convencionais de R, nos quais se apresenta primeiro R como linguagem de programação, vamos começar com aquilo que é distintivo em R, que é sua vocação para análise de dados. Em particular, vamos começar trabalhando com _data frames_, que são as matrizes de dados, e a gramática do pacote _dplyr_, utilizando como exemplo os dados da PIESP
 
 3 - No [Tutorial 2](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-02.md) veremos mais alguns aspectos básicos de manipulação de dados com _dplyr_. Utilizaremos dados de casos e óbitos de COVID-19 nos municípios do Estado de São Paulo.
+
+4 - Finalizaremos o primeiro dia de curso com um encontro às 12h30 para conversamos sobre a forma do curso e sobre o conteúdo dos tutoriais, além de discutirmos ajustes no programa.
 
 Lembre-se: é mais importante aprender com calma do que concluir os tutoriais. Siga seu ritmo.
 
