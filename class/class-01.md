@@ -1,4 +1,4 @@
-#  Cebrap.lab - Programação em R - Introdução ao curso e R Básico
+#  1o Encontro
 
 ## Objetivos Gerais
 
