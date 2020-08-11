@@ -180,7 +180,7 @@ Em vez de armazenarmos a sim/não, presença/ausência, etc com os números 0 e 
 O que acontece se fizermos operações matemáticas com vetores lógicos?
   
 ```{r}
-video + 1
+sp + 1
 ```
 
 Automaticamente, o R transforma FALSE em 0 e TRUE em 1 se forem utilizados em uma operação matemática.
