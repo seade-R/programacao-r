@@ -185,6 +185,47 @@ print(x)
 
 A condição que o _if_ deve atender vem entre parênteses. A instrução a ser atendida caso a cláusula seja verdadeira vem dentro das chaves. Aliás, é boa prática (na maioria dos casos) abrir as chaves em uma linha, escrever as instruções em outra, e fechar as chaves na linha seguinte ao final das instruções, como no exemplo. Também é boa prática "identar", ou seja, desalinhar as instruções do restante do código. Falaremos sobre "estilo" em algum momento do curso. Por enquanto, apenas observe e não se assuste. Diferentemente de outras linguagens, R não requer identação para funcionar corretamente.
 
+Vamos agora trabalhar com um exemplo diferente. No Plano SP, que o governo do Estado de São Paulo elaborou para reabertura durante a pandemia, a taxa ocupação de leitos de UTI é um dos indicadores que determina o estágio de abertura das cidades e Departamentos Regionais de Saúde do Estado (DRS). Em nosso exemplo fictício, se a ocupação de leitos estiver acima de 80%, o DRS entra na fase vermelha.
+
+```{r}
+ocupacao_leitos_uti <- 84
+
+if (ocupacao_leitos_uti >= 80){
+  status <- "vermelho"
+}
+
+print(status)
+
+```
+
+Mas e se quisermos dar o valor "verde" a "status" caso a ocupação esteja abaixo de 80%? Usamos _else_ para indicar o que fazer em todos os casos em que a condição em _if_ não foi atendida.
+
+```{r}
+if (ocupacao_leitos_uti >= 80){
+  status <- "vermelho"
+} else {
+  status <- "verde"
+}
+
+print(status)
+```
+
+Por fim, vamos imaginar um regra mais complexa. Se a taxa de ocupação for maior que 80%, então o DRS estará na fase vermelha. Se estiver entre 80% (exclusive) e 70% (inclusive), o "status" será igual a "amarelo". Com menos de 70% o status será verde.
+
+Veja como traduzir a regra acima em código usando _if_, _else if_ e _else_.
+
+```{r}
+if (ocupacao_leitos_uti >= 80){
+  status <- "vermelho"
+} else if (ocupacao_leitos_uti < 80 & ocupacao_leitos_uti >= 70){
+  status <- "amarelo"
+} else {
+  status <- "verde"
+}
+```
+
+É possível complicar bastante o uso dos condicionais "aninhando" uma cláusula dentro da outra e criando "labirintos" de condições. Fazer isso, porém, é mais uma questão de lógica do que de uso da linguagem. Não há variações relevantes do uso em relação aos exemplos simples apresentados acima. Se você consegue fazer os condicionais em papel e caneta e se os exemplos anteriores tiverem ficado claros, então consegue fazê-los em R.
+
 ## Repetindo tarefas - while loop
 
 Uma das vantagens dos computadores em relação aos seres humanos é a capacidade de repetir tarefas a um custo baixo. Vamos ver um exemplo simples: contar até 42. Usaremos como recurso um _while_ loop, ou seja, daremos um estado inicial, uma condição e uma instrução para o computador e pediremos para ele repetir a instrução __enquanto__ a condição for atendida.
