@@ -412,7 +412,7 @@ semana_completa[c(6, 7)]
 Ou ainda, os dias úteis da semana:
 
 ```{r}
-semana_1[1:5]
+semana_completa[1:5]
 ```
 
 Note que podemos gerar um vetor que é uma sequência numérica usando ':'.
@@ -473,6 +473,8 @@ meses <- c("Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho",
            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
 
 names(litros_cafe) <- meses
+
+litros_cafe
 ```
 
 Mas não dê muito atenção à nomeação de posições de um vetor agora, pois é pouco usual.
