@@ -82,7 +82,7 @@ Como vamos trabalhar com arquivos parecidos armazenados em diversos URLs, coloca
 url_piesp <- 'https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp.csv'
 url_piesp_virgula <- 'https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp_virgula.csv'
 url_piesp_tab <- 'https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp_tab.txt'
-url_piesp_sem_cabecalho <- 'https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp_sem_cabecalho.csv.csv'
+url_piesp_sem_cabecalho <- 'https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp_sem_cabecalho.csv'
 ```
 
 ```{r}
@@ -117,27 +117,32 @@ piesp <- read_delim(url_piesp_sem_cabecalho,
 Além dos valores lógicos, "col_names" também aceita um vetor com novos nomes para as colunas como argumento:
 
 ```{r}
-dados <- read_delim(file_sem_header, 
-                    col_names = c("Ano", "Trimestre", "Data do Anuncio", "Empresa alvo do investimento", "Empresa(s) investidora(s), "Real (em milhoes), "Dolar (em milhoes), "Valor Informado", "Municipio", "Regiao", "Descricao do investimento", "CNAE Empresa alvo do investimento", "CNAE Empresa(s) investidora(s), "Tipo Investimento", "Periodo"),
+piesp_com_cabecalho_novo <- read_delim(url_piesp_sem_cabecalho, 
+                    col_names = c("Ano", "Trimestre", "Data do Anuncio", "Empresa alvo do investimento",
+                                  "Empresa(s) investidora(s)", "Real (em milhoes)", "Dolar (em milhoes)",
+                                  "Valor Informado", "Municipio", "Regiao", "Descricao do investimento", 
+                                  "CNAE Empresa alvo do investimento", "CNAE Empresa(s) investidora(s)",
+                                  "Tipo Investimento", "Periodo"),
                     delim = ";")
 ```
 
 Por vezes, é interessante definir as classes das variáveis a serem importadas, para evitar novas transformações quando os dados forem importados. O argumento _col\_types_ deve ser uma sequência de caracteres onde "c" = "character", "d" = "double", "l" = "logical" e "i" = "integer". Por exemplo:
 
 ```{r}
-dados <- read_delim(file1, 
-                    delim = ",", 
-                    col_types = "cicid")
+piesp <- read_delim(url_piesp, 
+                    delim = ";", 
+                    col_types = "iiccccccccccccc")
 ```
 
-Perceba que quando abrimos os dados sem especificar o tipo da coluna, a função _read\_csv_ tenta identificá-los. 
 
-Uma complexidade de abertura de dados brasileiros é o uso da vírgula como separador decimal e o ponto para indicar milhares. Temos que especificar no argumento _locale_ essas diferenças. 
+Perceba que quando abrimos os dados sem especificar o tipo da coluna, a função _read\_delim_ e suas variantes tentam identificá-los. 
+
+Uma complexidade de abertura de dados brasileiros é o uso da vírgula como separador decimal e o ponto para indicar milhares. Note que deixamos as colunas de valores como 'character' por usar ',' como de separador de decimal, quando o padrão em R é '.'. Temos que especificar no argumento _locale_ essas diferenças. 
 
 ```{r}
-dados <- read_delim(file1, 
-                    delim = ",", 
-                    locale = locale(decimal_mark=",",grouping_mark="."))
+piesp <- read_delim(url_piesp, 
+                    delim = ";", 
+                    locale = locale(decimal_mark = ",", grouping_mark = "."))
 ```
 
 Também podemos usar _locale_ para especificar o formato da hora, o formato da data e o encoding do arquivo que estamos lendo.
