@@ -87,7 +87,7 @@ url_covid_latin1 <- 'https://raw.githubusercontent.com/seade-R/dados-covid-sp/ma
 ```
 
 ```{r}
-piesp_virgula <- read_csv2(url_piesp_virgula)
+piesp_virgula <- read_csv(url_piesp_virgula)
 ```
 
 Funciona da mesma maneira.
