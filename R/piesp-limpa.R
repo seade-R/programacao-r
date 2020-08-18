@@ -22,3 +22,8 @@ piesp <- piesp %>%
     )
 
 write_csv2(piesp, 'data/piesp.csv')
+write_csv(piesp, 'data/piesp_virgula.csv')
+write_delim(piesp, 'data/piesp_tab.csv', delim = '\t')
+write_csv2(piesp, 'data/piesp_sem_cabecalho.csv', col_names = F)
+write.csv2(piesp, 'data/piesp_sem_cabecalho.csv', row.names = F, fileEncoding = 'Latin1')
+?write_delim
