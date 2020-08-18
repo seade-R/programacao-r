@@ -14,7 +14,7 @@ No primeiro encontro trabalhamos com a gramática do pacote _dplyr_ para manipul
 
 3 - A seguir vá para o [Tutorial 6](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-06.md), que retoma o exemplo da PIESP e discute um pouco sobre a produção de tabelas na gramática do _dplyr_. 
 
-4 - Ao terminar, comece a Atividade 1 (colocarei o link em breve).
+4 - Ao terminar, comece a [Atividade 1](https://github.com/seade-R/programacao-r/blob/master/activities/activity-01.md).
 
 Não nos encontraremos no Zoom novamente no final da manhã. Mas estou à disposição para tirar dúvidas por whatsapp e para produzir material de apoio que facilite seu aprendizado.
 
