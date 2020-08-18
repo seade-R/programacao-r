@@ -10,7 +10,7 @@ No primeiro encontro trabalhamos com a gramática do pacote _dplyr_ para manipul
 
 1 - Entre 9h às 9h30, leia as instruções deste roteiro. Se deixou algum tutorial inacabado do encontro anterior, comece a ele. Caso contrário, prossiga.
 
-2 - Assita ao breve vídeo sobre como gerenciar projetos no RStudio: https://www.youtube.com/watch?v=ukU9iNkPX60&t=3s. Uma boa dica de leitura sobre o assunto (opcional e para o final da manhã: https://curso-r.github.io/zen-do-r/rproj-dir.html#diret%C3%B3rio-de-trabalho). Abra um projeto para armazenar o material do curso.
+2 - Assista ao breve vídeo sobre como gerenciar projetos no RStudio: https://www.youtube.com/watch?v=ukU9iNkPX60&t=3s. Uma boa dica de leitura sobre o assunto (opcional e para o final da manhã: https://curso-r.github.io/zen-do-r/rproj-dir.html#diret%C3%B3rio-de-trabalho). Abra um projeto para armazenar o material do curso.
 
 3 - A seguir vá para o [Tutorial 3](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-03.md). Nele vocẽ aprenderá sobre um pouco mais sobre data frames, vetores e operações matemáticas no R. Este tutorial trata dos fundamentos da manipulação de dados da gramática do pacote 'base', que veremos em paralelo à do 'dplyr'.
 

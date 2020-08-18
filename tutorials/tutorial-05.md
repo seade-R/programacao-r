@@ -83,6 +83,7 @@ url_piesp <- 'https://raw.githubusercontent.com/seade-R/programacao-r/master/dat
 url_piesp_virgula <- 'https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp_virgula.csv'
 url_piesp_tab <- 'https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp_tab.txt'
 url_piesp_sem_cabecalho <- 'https://raw.githubusercontent.com/seade-R/programacao-r/master/data/piesp_sem_cabecalho.csv'
+url_covid_latin1 <- 'https://raw.githubusercontent.com/seade-R/dados-covid-sp/master/data/dados_covid_sp_latin1.csv'
 ```
 
 ```{r}
@@ -106,7 +107,7 @@ piesp <- read_delim(url_piesp, , delim = ";")
 piesp_virgula <- read_delim(url_piesp_virgula, delim = ",")
 ```
 
-O padrão de _read\_delim_ (e _read\_csv_) é importar a primeira linha como nome das variáveis. Se nossos dados não tiverem um _header_ (cabeçalho, ou seja, nomes das variáveis na primeira linhas), a primeira linha de dados se torna equivocadamente o nome das variáveis (inclusive os números, que aparecem antecedidos por um "X"). Para corrigir o problema utilizamos o argumento "col_names", que deve ser igual a "FALSE" para os dados armezenados sem nomes de colunas, por exemplo:
+O padrão de _read\_delim_ (e _read\_csv_ e _read\_csv2_) é importar a primeira linha como nome das variáveis. Se nossos dados não tiverem um _header_ (cabeçalho, ou seja, nomes das variáveis na primeira linhas), a primeira linha de dados se torna equivocadamente o nome das variáveis (inclusive os números, que aparecem antecedidos por um "X"). Para corrigir o problema utilizamos o argumento "col_names", que deve ser igual a "FALSE" para os dados armezenados sem nomes de colunas, por exemplo:
 
 ```{r}
 piesp <- read_delim(url_piesp_sem_cabecalho, 
@@ -142,99 +143,154 @@ Uma complexidade de abertura de dados brasileiros é o uso da vírgula como sepa
 ```{r}
 piesp <- read_delim(url_piesp, 
                     delim = ";", 
+                    col_types = 'iicccddiccccccc',
+                    locale = locale(decimal_mark = ",", grouping_mark = "."))
+```
+
+No caso dos dados da PIESP, alguns números não são lidos corretamente por haver espaços inúteis antes ou depois. Com o argumento 'trim_ws = TRUE' eliminamos espaços em que precedem ou sucedem a informação em todas as variáveis. Vamos usá-lo.
+
+```{r}
+piesp <- read_delim(url_piesp, 
+                    delim = ";", 
+                    col_types = 'iicccddiccccccc',
+                    trim_ws = T,
                     locale = locale(decimal_mark = ",", grouping_mark = "."))
 ```
 
 Também podemos usar _locale_ para especificar o formato da hora, o formato da data e o encoding do arquivo que estamos lendo.
 
-Finalmente, é comum termos problemas para abrir arquivos que contenham caracteres especiais, pois há diferentes formas do computador transformar 0 e 1 em vogais acentuadas, cecedilha, etc. O "encoding" de cada arquivo varia de acordo com o sistema operacional e aplicativo no qual foi gerado.
+É comum termos problemas para abrir arquivos que contenham caracteres especiais, pois há diferentes formas do computador transformar 0 e 1 em vogais acentuadas, cecedilha, etc. O "encoding" de cada arquivo varia de acordo com o sistema operacional e aplicativo no qual foi gerado.
+
+No servidor do SEADE utilizamos como encoding nativo "UTF-8", pois o servidor é Linux (use Linux!). Mac também costuma usar UTF-8. Windowns, por sua vez, costuma usar outros encodings, como 'Latin1'. Vamos abrir um arquivo sobre casos e óbitos relacionados à epidemia de COVID-19 em São Paulo cujo encoding é 'Latin1' sem informar o parâmetro do encoding:
 
 ```{r}
-dados <- read_delim(file1, 
-                    delim = ",", 
-                    locale = locale(encoding='latin1'))
+covid <- read_csv2(url_covid_latin1) 
+
+head(covid)
 ```
 
-Para resolver este problema, informamos ao R o parâmetro _encoding_ dentro do _locale_, que indica qual é o "encoding" esperado do arquivo. Infelizmente não há formas automáticas infalíveis de descobrir o "encoding" de um arquivo e é preciso conhecer como foi gerado -- seja por que você produziu o arquivo ou por que você teve acesso à documentação -- ou partir para tentativa e erro. Alguns "encodings" comuns são "latin1", "latin2" e "utf8", mas há diversos outros. Como arquivo com o qual estamos trabalhando não contém caracteres especiais, não é preciso fazer nada.
+Notem como a grafia dos municípios com nomes acentuados está totalmente bagunçada. Em alguns casos, sequer conseguimos abrir o arquivo.
 
-## Tibbles
+```{r}
+covid <- read_csv2(url_covid_latin1,
+                    locale = locale(encoding = 'latin1'))
 
-Se inspecionarmos o objeto criado por qualquer uma das operações acima, _dados_ parecem um pouco diferentes do que vimos antes. _dados_ é um data.frame, mas também tem alguns característicos adicionais que facilitam o nosso trabalho. Ele se chama um _tibble_ (um objeto pode ser de mais de uma clase). Observe que não utilizamos _head_ para imprimir as primeiras linhas. Essa é uma característica de _tibbles_: o output contém uma fração do banco, a informação sobre número de linhas e colunas, e os tipos de cada variável abaixo dos nomes das colunas. Você pode ler mais sobre _tibbles_ [aqui](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
+head(covid)
+```
+
+Veja como agora resolvemos o problema.
+
+Infelizmente não há formas automáticas infalíveis de descobrir o "encoding" de um arquivo e é preciso conhecer como foi gerado -- seja por que você produziu o arquivo ou por que você teve acesso à documentação. Ou descobrir a partir para tentativa e erro. Alguns "encodings" comuns são "latin1", "latin2" e "utf8", mas há diversos outros.
+
+Finalmente, você pode pular escolher 'pular' algumas linhas do arquivo (por exemplo, no caso de arquivos com informações que não fazem parte do banco na primeira linha) como argumento 'skip' ou limitar a abertura a um número de linhas com 'n_max'. Se estiver lidando com bases muito grandes, convém abrir apenas as primeiras para acertar todos os parâmetros da abertura e depois excluir o limite para abrir o arquivo completo.
+
+Recomendo que você leia rapidamento 'help' das funções com as quais trabalhamos para aprender um pouco mais:
+
+```{r}
+?read_delim
+```
+
+## Fread, a melhor função de abertura
+
+R é uma linguagem com vários dialetos. Um dialeto excelente, mas não tão popular quanto o do _dplyr_ é o do pacote _data.table_. Não vamos falar dele no curso. Mas vamos instalá-lo para usar uma única função disponível que vale muito a pena ter em nosso repertório: _fread_.
+
+
+```{r}
+install.packages('data.table')
+```
+
+Lembre-se de carregá-lo:
+
+```{r}
+library(data.table)
+```
+
+A função _fread_ é extremamente rápida e inteligente para abrir dados. Ela reconhece automaticamente boa parte dos parâmetros necessários para abrir os dados. E consegue abrir bases muito grandes na RAM que as funções do _readr_ não conseguem (e fazem o RStudio 'quebrar'). Seu uso é trivial:
+
+```{r}
+piesp <- fread(url_piesp)
+```
+
+Como as funções do _readr_, há vários parâmetros que podem ser informados. Se precisar, use o 'help' para aprender mais.
+
+## A família read.table
+
+As funções do _readr_ são redundantes em relação a funções de abertura de dados que havia no pacote 'base'. Estas são da 'família' _read.table_. A grafia das funções do _readr_ levam '\_' enquanto as do _base_ levam '.'.
+
+O uso de _read.table_ e suas derivadas é muito semelhante ao de _read\_delim_ e companhia, mas os nomes dos parâmetros muda. Novamente, se precisar, use o 'help' para aprender mais.
 
 ## Dados em arquivos editores de planilhas
 
-Editores de planilha são, em geral, a primeira ferramenta de análise de dados que aprendemos. Diversas organizações disponibilizam (infelizmente) seus dados em formato .xls ou .xlsx e muitos pesquisadores utilizam editores de planilha para construir bases de dados.
+Editores de planilha são, em geral, a primeira ferramenta de análise de dados que aprendemos. Diversas organizações disponibilizam seus dados em formato .xls ou .xlsx e muitos pesquisadores utilizam editores de planilha para construir bases de dados. Nossa missão nesse curso é fazer você abandonar o editor de planilhas.
 
 Vamos ver como obter dados em formato .xls ou .xlsx diretamente, sem precisar abrir os arquivos e exportá-los para um formato de texto.
 
-Há dois bons pacotes com funções para dados em editores de planilha: _readxl_ e _gdata_. Vamos trabalhar apenas com o primeiro, mas convém conhecer o segundo se você for trabalhar constantemente com planilhas e quiser editá-las, e não só salvá-las. _readxl_ também é parte do _tidyverse_ mas temos que abri a biblioteca direitamente. Importe o pacote:
+Há dois bons pacotes com funções para dados em editores de planilha: _readxl_ e _gdata_. Vamos trabalhar apenas com o primeiro, mas convém conhecer o segundo se você for trabalhar constantemente com planilhas e quiser editá-las, e não só salvá-las. _readxl_ também é parte do _tidyverse_ mas temos que abri a biblioteca direitamente. Instale e carregue o pacote:
 
 ```{r}
+install.packages('readxl')
 library(readxl)
 ```
 
-
 ### Um pouco sobre donwload e manipulação de arquivos
 
-Nosso exemplo será a Pesquisa Perfil dos Municípios Brasileiros de 2005, produzida pelo IBGE e apelidade de MUNIC. Diferentemente das demais funções deste tutorial, precisamos baixar o arquivo para o computador e acessá-lo localmente. Faça o download diretamente do [site do IBGE](ftp://ftp.ibge.gov.br/Perfil_Municipios/2005/base_MUNIC_2005.zip) e descompacte. Ou, mais interessante ainda, vamos automatizar o download e descompactação do arquivo (aviso: pode dar erro no Windows e tentaremos corrigir na hora -- use Linux!).
+Nosso exemplo de arquivo em .xlsx será a tabela de 'Nascidos Vivos, Óbitos de Menores de 5 anos e Taxa de Mortalidade na Infância' produzida pelo SEADE. Você pode baixá-la no URL http://www.seade.gov.br/produtos/midia/2019/11/Tabela5A_2018.xlsx.
 
-Em primeiro lugar, vamos guardar o endereço url do arquivo em um objeto e fazer o download. Note que na função _download.file_ o primeiro argumento é o url e o segundo é o nome do arquivo que será salvo.
-
-```{r}
-url_arquivo <- "ftp://ftp.ibge.gov.br/Perfil_Municipios/2005/base_MUNIC_2005.zip"
-download.file(url_arquivo, "temp.zip", quiet = F)
-```
-
-O argumento "quiet = F" serve para não imprimirmos no console "os números" do download (pois o tutorial ficaria poluído), mas você pode retirá-lo ou alterá-lo caso queira ver o que acontece.
-
-Com _unzip_, vamos extrair o conteúdo da pasta:
+Em vez de baixarmos o arquivo manualmente, vamos fazer download em código com a função _download.file_: Em primeiro lugar, vamos guardar o endereço URL do arquivo em um objeto e fazer o download.
 
 ```{r}
-unzip("temp.zip")
+url_arquivo <- "http://www.seade.gov.br/produtos/midia/2019/11/Tabela5A_2018.xlsx"
 ```
 
-Use _list.files_ para ver todos os arquivos que estão na sua pasta caso você não saiba o nome do arquivo baixado. No nosso caso utilizaremos o arquivo "Base 2005.xls"
+A seguir, utilizaremos _download.file_. O primeiro argumento desta função é o URL e o segundo é o nome do arquivo que será salvo no seu computador (veja, ainda não estamos criando um objeto, só estamos fazendo download como se utilizassemos um navegador).
+
+```{r}
+download.file(url_arquivo, "mortalidade_infantil.xlsx")
+```
+
+Temos agora o arquivo "mortalidade_infantil.xlsx" na nossa pasta de trabalho. Com a função _list.files_
+você examina os arquivos que estão nesta pasta (sem precisar olhar dentro da pasta). "mortalidade_infantil.xlsx" estará lá
 
 ```{r, eval = F}
 list.files()
 ```
 
-Vamos aproveitar e excluir nosso arquivo .zip temporário: 
-
-```{r}
-file.remove("temp.zip")
-```
-
 ## Voltando às planilhas
 
-Para não repetir o nome do arquivo diversas vezes, vamos criar o objeto "arquivo" que contém o endereço do arquivo no seu computador (ou só o nome do arquivo entre aspas se você tivê-lo no seu wd):
-
-```{r}
-arquivo <- "Base 2005.xls"
-```
-Com _excel\_sheets_ examinamos quais são as planilhas existentes do arquivo:
+Coma função _excel\_sheets_ examinamos quais são as planilhas existentes do arquivo:
 
 ```{r, results = 'hide'}
-excel_sheets(arquivo)
+excel_sheets("mortalidade_infantil.xlsx")
 ```
 
-No caso, temos 11 planilhas diferentes (e um bocado de mensagens de erro estranhas). O dicionário, para quem já trabalhou alguma vez com a MUNIC, não é uma base de dados, apenas textos espalhados entre células. As demais, no entanto, têm formato adequado para _data frame_.
-
-Vamos importar os dados da planilha "Variáveis externas". As duas maneiras abaixo se equivalem:
+Em nosso caso, temos apenas 1 planilha dentro do arquivo, denominada "TM<5". Mas é possível trabalhar com arquivos com múltiplas planilhas. Vamos importá-la. Podemos usar tanto o nome quanto a posição para indicar qual planilha utilizaremos no argumento 'sheet':
 
 ```{r, results = 'hide'}
-# 1
-transporte <- read_excel(arquivo, "Variáveis externas")
+mf <- read_excel("mortalidade_infantil.xlsx", sheet = "TM<5")
 
-# 2
-transporte <- read_excel(arquivo, 11)
+# ou
+
+mf <- read_excel("mortalidade_infantil.xlsx", sheet = 1)
+```
+
+Quando há apenas uma planilha, 'sheet' torna-se dispensável:
+
+```{r, results = 'hide'}
+mf <- read_excel("mortalidade_infantil.xlsx")
 ```
 
 A função _read\_excel_ aceita os argumentos "col_names" e "col_types" tal como as funções de importação do pacote _readr_.
 
-```{r, include = F}
-file.remove("Base 2005.xls")
+Veja que a planilha não contém apenas a matriz de dados. Há também informações antes ou depois e todas são importadas. E tudo foi importado em um data frame, ainda que incorretamente.
+
+Podemos delimitar a área da qual importaremos os dados adicionando o argumento 'range':
+
+```{r, results = 'hide'}
+mf <- read_excel('mortalidade_infantil.xlsx', sheet = "TM<5", range = "A9:D38")
 ```
+
+Muito melhor! Precisaríamos agora renomear as variáveis e alterar o seu tipo. Mas temos uma importação feita com sucesso!
+
 
 ## Dados de SPSS, Stata e SAS
 
@@ -246,40 +302,51 @@ library(haven)
 
 Basicamente, há cinco funções de importação de dados em _haven_: _read\_sas_, para dados em SAS; _read\_stata_ e _read\_dta_, idênticas, para dados em formato .dta gerados em Stata; e _read\_sav_ e _read\_por_, uma para cada formato de dados em SPSS. O uso, como era de se esperar, é bastante similar ao que vimos no tutorial todo.
 
-Vamos usar como exemplo o [Latinobarômetro 2015](http://www.latinobarometro.org/latContents.jsp), que está disponível para SAS, Stata, SPSS e R. Como os arquivos são grandes demais e o portal do Latinobarômetro é "cheio de javascript" (dá mais trabalho pegar dados de um portal com funcionalidades construídas nesta linguagem), vamos fazer o processo manual de baixar os dados da página 'data bank', descompactar os arquivos de 2015 e abrí-los. Vamos ignorar SAS por razões que não interessam agora e por não ser uma linguagem popular nas ciências sociais, mas se você tiver interesse em saber mais, me procure.
+Vamos usar como exemplo os dados da PED de 2019, disponível em https://www.seade.gov.br/produtos/microdados/.
 
-## Abrindo os dados com haven
-
-Vejamos o uso das funções em arquivos de diferentes formatos:
+Começaremos baixando o arquivo no URL http://www.seade.gov.br/produtos/midia/2019/07/PED2019_Jan_a_Jun_sav.zip que está em formato .zip. Usaremos a função _download.file_ como fizemos anteriormente (não ligue para as quebras de linha, é só para variar um pouco o estilo do código):
 
 ```{r}
-# SPSS
-latino_barometro_spss <- read_spss("Latinobarometro_2015_Eng.sav")
-latino_barometro_spss
+download.file(
+  'http://www.seade.gov.br/produtos/midia/2019/07/PED2019_Jan_a_Jun_sav.zip',
+  'ped_2019.zip'
+)
+```
 
-# Stata
-latino_barometro_stata <- read_stata("Latinobarometro_2015_Eng.dta")
-latino_barometro_stata
+Precisamos agora ir até a pasta para descompactar o arquivo .zip? É evidente que não! Faremos com código!
+
+```{r}
+unzip('ped_2019.zip')
+```
+
+Com _list.files_ vamos verificar se o arquivo .sav está lá após descompactarmos o arquivo que baixamos:
+
+```{r}
+list.files()
+```
+
+Pronto, podemos importar a base em .sav.
+
+```{r}
+ped19 <- read_sav("PED2019_Jan_a_Jun_sav.SAV")
+```
+
+ou, uma função quase idêntica, mas que também abre arquivos de extensão .por
+
+```{r}
+ped19 <- read_spss("PED2019_Jan_a_Jun_sav.SAV")
 ```
 
 Simples assim.
 
 Há critérios de conversão de variáveis categóricas, rótulos e etc, adotados pelo R ao importar arquivos de outras linguagens, mas você pode descobrí-los testando sozinha.
 
-## Arquivos .RData
+O procedimento para dados em provenientes de Stata ou SAS é bastante similar e a grafia das funções fácil de advinhar: _read\_stata_ e read\_sas_.
 
-Faça download do arquivo do Latinobarômetro 2015 para formato R. Você verá que o arquivo tem a extensão .RData. Este é o formato de dados do R? Sim e não.
+## readxl e haven no botão (aaaaaaaaaaaaaaaaargh!!!) Import Dataset
 
-Começando pelo "não": um arquivo .RData não é um arquivo de base de dados em R, ou seja, não contém um _data frame_. Ele contém um workspace ('Environment') inteiro! Ou seja, se você salvar o seu workspace agora usando o "botão de disquete" do RStudio que está na aba "Enviroment" (provavelmente no canto superior à direita), você salvará todos os objetos que ali estão -- _data frames_, vetores, funções, gráficos, etc -- e não apenas um único _data frame_.
+Podemos utilizar o botão (aaaaaaaaaaaaaaaaargh!!!) 'Import Dataset' para abrir planilhas ou arquivos de outros softwares. Pode testar, funciona.
 
-Em um tutorial futuro veremos como exportar arquivos de texto com as famílias de funções "write", primas das funções "read", dos mesmos pacotes que usamos neste tutorial.
+## Uau! Quanta coisa!
 
-Para abrir um arquivo .RData, por exemplo, o do Latinobarômetro ou o que você acabou de salvar, use a função _load_:
-
-```{r}
-# Latinobarometro
-load("Latinobarometro_2015_Eng.rdata")
-```
-
-
-
+Abrir dados em R é por vezes uma aventura. A grande vantagem é que podemos abrir qualquer tipo de dado de qualquer formato. Parece muita coisa agora, mas não precisamos memorizar nada. Use este tutorial como guia no futuro.
