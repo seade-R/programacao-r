@@ -24,9 +24,7 @@ O curso oferece uma iniciação à lógica de programação e ao uso da linguage
 
 [18-08-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-03.md) __Tidyverse para manipuação de dados__ - Faremos o camninho de volta ao nosso ponto de partida do curso: a manipulação de dados com a gramática do _dplyr_. Exploraremos agora aspectos diversos da manipulação de dados com mais rigor e profundidade.
 
-[25-08-2020] __Bases de dados relacionais e visualização de dados com ggplot2__ - A segunda especialidade da linguagem R é a visualização de dados. Faremos, nesta quarta aula, um tour pelos principais tipos de gráficos e sua adequação para diferentes tipos de dados. Ademais. trabalaremos bases de dados relacionais com _dplyr_ e veremos diversas maneiras de importar e exportar dados em R. Paralelamente, faremos uma incursão rápida na gramática de manipulação de dados do pacote _base_.
-
-[01-09-2020] __Desafios e finalização dos tutoriais__ - O tempo de aprendizado de cada participante é único. Deixaremos o último dia para terminar os tutoriais das aulas anteriores ou para tratar de temas de interesse específico, tais como: (1) integração entre R e Power BI; (2) Survey em R a partir da PNAD-C; (3) integração entre R e SGBD (Sistemas de Gereciamento de Bancos de Dados) em SQL; (4) dados espaciais em R.
+[25-08-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-03.md) __Bases de dados relacionais__ - No encontro de hoje seguiremos com a produção de tabelas em R, agora com o pacote _janitor_. Aprenderemos um pouco sobre factors, que é a estrutura de dados em R para variáveis categóricas. Em finalmente, veremo como trabalhar com dados relacionais em R.
 
 ## Referências bibliográficas
 

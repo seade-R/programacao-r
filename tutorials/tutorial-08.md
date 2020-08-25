@@ -295,6 +295,11 @@ Tanto 'inner join' quanto 'left/right join' descartam casos de pelo menos alguma
 df_full <- covid_maio %>% 
   full_join(pop20, by = 'codigo_ibge') 
 ```
+
+Não importa qual é a base à esquerda ou à direita. O resultado para a combinação de 'covid_maio' e 'pop20' terá 646 linhas, 326 municípios paulistas que tinham casos com COVID-19 em 01 de maio de 2020, 319 que ainda não constavam na base 'covid_maio' e o 'Ignorado', que não tem informações sobre a população em 2020.
+
+## Filtering joins
+
 ```{r}
 df_f %>% 
   anti_join(df_r)
