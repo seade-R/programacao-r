@@ -1,0 +1,11 @@
+Variável;Tipo;Descrição;Fonte
+Código IBGE;numérico;Código oficial de 7 dígitos definido pelo IBGE para município;Instituto Brasileiro de Geografia e Estatística – IBGE 
+Município;texto;Nome do Município;Instituto Brasileiro de Geografia e Estatística – IBGE 
+Região Administrativa;texto;Nome da Região Administrativa ;Fundação Sistema Estadual de Análise de Dados – Seade
+Código RA;numérico;Código da Região Administrativa;Fundação Sistema Estadual de Análise de Dados – Seade
+Código DRS;numérico;Código do Departamento Regional de Saúde;Secretaria de Estado da Saúde – SES
+DRS;texto;Nome do Departamento Regional de Saúde;Secretaria de Estado da Saúde – SES
+Ano;texto;Ano de referência - 2020;Fundação Sistema Estadual de Análise de Dados – Seade
+Sexo;texto;Homens e Mulheres;Fundação Sistema Estadual de Análise de Dados – Seade
+Idade;texto; 17 faixas etárias quinquenais - de 0 a 4 anos até 80 anos e mais;Fundação Sistema Estadual de Análise de Dados – Seade
+População;numérico;População por sexo e faixa etária quinquenal;Fundação Sistema Estadual de Análise de Dados – Seade

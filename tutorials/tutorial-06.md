@@ -26,7 +26,7 @@ piesp <- piesp %>%
          tipo = `Tipo Investimento`)
 ```
 
-## Tabelas no tidyvese são sempre agrupamentos
+## Tabelas no tidyverse são sempre agrupamentos
 
 Vocês notaram a ausência de uma função simples de produção de tabela até agora nos tutoriais? Algo como 'table'?
 
@@ -72,7 +72,6 @@ Voltaremos a falar sobre tabelas. Vamos para agora para fazer algumas transforma
 A última tabela que produzimos ficou demasidamente grande. Há muitas CNAEs. Para simplificar nossa análise, vamos trabalhar apenas com a divisão da CNAE, que é representada pelos 2 primeiros dígitos. Como a CNAE é uma variável do tipo 'character', apesar de ser escrita em números, temos que fazer um recorte pelos 2 primeiros dígitos do texto da CNAE. Vamos usar o verbo mutate e a função _str\_sub_ ('str' de string e 'sub' de subset) para criar a variável divisão:
 
 ```{r}
-
 piesp <- piesp %>% 
   mutate(divisao = str_sub(cnae, start = 1, end = 2),
          divisao = as.numeric(divisao))
@@ -167,7 +166,6 @@ Lembre-se de que não estamos criando novos objetos. Apenas 'imprimindo' tabelas
 Vamos incluir uma nova variável na nossa análise: o tipo de investimento, ou seja, se o investimento é de implantação, ampiação ou modernização de negócios.
 
 ```{r}
-
 piesp_2 %>% 
   group_by(tipo) %>% 
   count
@@ -176,7 +174,6 @@ piesp_2 %>%
 Vamos simplificar essa variável e trabalhar apenas com duas categorias: 'Implantacao' e 'Ampliacao/Modernizacao', que conterá 'Ampliacao' e 'Modernizacao', antes separadas. Vamos fazer uma substituição na própria variável, sobrescrevendo-a. Utilizaremos o verbo _mutate_ e a função _replace_. Leia com calma para entender o seu uso:
 
 ```{r}
-
 piesp_2 <- piesp_2 %>%
   mutate(
     tipo = replace(tipo, tipo == 'Ampliacao', 'Ampliacao/Modernizacao'),

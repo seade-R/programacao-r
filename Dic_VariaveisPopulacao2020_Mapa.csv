@@ -1,0 +1,11 @@
+Variável;Tipo;Descrição;Fonte
+Código IBGE;numérico;Código oficial de 7 dígitos definido pelo IBGE para município;Instituto Brasileiro de Geografia e Estatística – IBGE 
+Município;texto;Nome do Município;Instituto Brasileiro de Geografia e Estatística – IBGE 
+Região Administrativa;texto;Nome da Região Administrativa ;Fundação Sistema Estadual de Análise de Dados – Seade
+Código RA;numérico;Código da Região Administrativa;Fundação Sistema Estadual de Análise de Dados – Seade
+Código DRS;numérico;Código do Departamento Regional de Saúde;Secretaria de Estado da Saúde – SES
+DRS;texto;Nome do Departamento Regional de Saúde;Secretaria de Estado da Saúde – SES
+População Total 2020;numérico;Projeção da população total residente;Fundação Sistema Estadual de Análise de Dados – Seade
+Classes de tamanho;texto;Agrupanento de municípios segundo o tamanho da população residente;Fundação Sistema Estadual de Análise de Dados – Seade
+Sequência das Classes;numérico;Sequência em ordem crescente por tamanho da população (legenda do mapa);Fundação Sistema Estadual de Análise de Dados – Seade
+;;;
