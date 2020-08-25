@@ -50,18 +50,32 @@ obitos_2018 <- obitos_2018 %>%
 obitos_2018 %>% 
   tabyl(racacor_f) 
 
-obitos_2018 %>% 
+tabela_racacor <- obitos_2018 %>% 
   tabyl(racacor_f) %>% 
   adorn_pct_formatting() %>% 
+  adorn_totals() %>% 
   rename(`Raça/cor` = racacor_f,
          percentual = percent)
 
-obitos_2018 %>% 
-  tabyl(racacor_f) %>% 
-  adorn_rounding(digits = 2)
+tabela_racacor %>% 
+  write_csv2('tabela_racacor.csv')
 
 obitos_2018 %>% 
-  tabyl(racacor_f) %>% 
+  tabyl(racacor_f, sexo_f) 
+
+
+obitos_2018 %>% 
+  tabyl(racacor_f, sexo_f) %>% 
+  adorn_percentages()
+
+
+obitos_2018 %>% 
+  tabyl(racacor_f, sexo_f) %>% 
+  adorn_percentages() %>% 
+  adorn_pct_formatting()
+
+obitos_2018 %>% 
+  tabyl(racacor_f, sexo_f) %>% 
   adorn_totals()
 
 obitos_2018 %>% 
@@ -70,8 +84,28 @@ obitos_2018 %>%
 
 obitos_2018 %>% 
   tabyl(racacor_f, sexo_f) %>% 
+  adorn_totals(where = c('col', 'row'))
+
+obitos_2018 %>% 
+  tabyl(racacor_f, sexo_f) %>% 
   adorn_percentages() %>% 
   adorn_rounding(digits = 2)
+
+obitos_2018 %>% 
+  glimpse
+
+
+obitos_2018 %>% 
+  mutate(idade = as.numeric(idadeemanos)) %>% 
+  filter(!is.na(idadeemanos)) %>% 
+  summarise(mean(idadeemanos))
+
+obitos_2018 %>% 
+  tabyl(racacor_f, sexo_f) %>% 
+  adorn_totals(c('col', 'row')) %>% 
+  adorn_percentages('all') %>% 
+  adorn_pct_formatting()  
+
 
 obitos_2018 %>% 
   tabyl(racacor_f, sexo_f) %>% 

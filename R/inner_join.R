@@ -10,15 +10,8 @@ obitos_2019 <- obitos_2019 %>%
 obitos_2019 %>% 
   glimpse()
 
-obitos_2019 %>% 
-  tabyl(ano) 
-
-obitos_2019 <- obitos_2019 %>% 
-  rename(munic = municipio_de_residencia) %>% 
-  filter(munic != 'ESTADO DE SÃO PAULO')
-
 obitos_2019 <- obitos_2019 %>%
-  select(codigo_ibge, munic, total_homens, total_mulheres)
+  select(codigo_ibge, municipio_de_residencia, total_homens, total_mulheres)
 
 obitos_2019 %>% 
   glimpse()
@@ -44,13 +37,23 @@ populacao_imp <- populacao_imp %>%
 populacao_imp %>% 
   glimpse()
 
+populacao_imp %>% 
+  tabyl(periodos)
+
 populacao_imp <- populacao_imp %>% 
   filter(periodos == 2019) %>% 
   select(cod_ibge, populacao_masculina, populacao_feminina)
 
-df <- inner_join(obitos_2019, populacao_imp, by = c('codigo_ibge' = 'cod_ibge'))
+df_inner <- inner_join(obitos_2019, populacao_imp, by = c('codigo_ibge' = 'cod_ibge'))
 
+anti_join(obitos_2019, populacao_imp, by = c('codigo_ibge' = 'cod_ibge'))
 df %>% glimpse()
+
+df_inner %>% 
+  write_csv2('mortalidade_sexo_municipio.csv')
+
+df_inner %>% 
+  write.csv2('mortalidade_sexo_municipio.csv', row.names = F, fileEncoding = 'Latin1')
 
 df <- df %>% 
   mutate(
@@ -87,10 +90,21 @@ covid_maio <- read_csv2('data/covid_sp_20200501.csv')
 covid_maio <- covid_maio %>% 
   select(codigo_ibge, nome_munic, casos, obitos)
 
-df_l <- left_join(covid_maio, pop20, by = 'codigo_ibge') 
+nrow(pop20)
+nrow(covid_maio)
 
-df_l <- covid_maio %>% 
+df_left <- left_join(covid_maio, pop20, by = 'codigo_ibge') 
+
+df_left <- covid_maio %>% 
   left_join(pop20, by = 'codigo_ibge') 
+
+df_left %>% 
+  filter(codigo_ibge == 9999999)
+
+
+df_left <- df_left %>% 
+  filter(codigo_ibge == 9999999) %>% 
+  mutate(casos_pc = casos * 100000 / populacao)
 
 df_r <- covid_maio %>% 
   right_join(pop20, by = 'codigo_ibge') 

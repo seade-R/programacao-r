@@ -357,4 +357,34 @@ obitos_2018 %>%
               col_name =  'Sexo')
 ```
 
+## Cut: criando faixas (factor) a partir de uma variável numérica
+
+Uma das tarnsformações 
+
+```{r}
+obitos_2018 <- obitos_2018 %>% 
+  mutate(idadeanos = as.numeric(idadeanos)) 
+```
+```{r}
+obitos_2018 <- obitos_2018 %>% 
+  mutate(
+    idade_faixa = cut(idadeanos, 
+                      breaks = c(-Inf, 18, 75, Inf),
+                      labels = c('0 a 17', '18 a 74', '75 ou mais'))
+  )
+```
+
+```{r}
+obitos_2018 %>% 
+  tabyl(idade_faixa) %>% 
+  adorn_pct_formatting()
+```
+
+```{r}
+obitos_2018 %>% 
+  filter(is.na(idade_faixa)) %>% 
+  select(idadeanos, idade_faixa)
+```
+
+
 Fim

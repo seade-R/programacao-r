@@ -37,7 +37,7 @@ obitos_2019 <- obitos_2019 %>%
   clean_names()
 ```
 
-Fantático, não?
+Olhe o resultado abaixo. Fantático, não?
 
 ```{r}
 obitos_2019 %>% 
@@ -283,7 +283,7 @@ Com os dados combinados, podemos calcular a taxa por da população de cada muni
 
 ```{r}
 df_left <- df_left %>% 
-  filter(codigo_ibge == 9999999) %>% 
+  filter(codigo_ibge != 9999999) %>% 
   mutate(casos_pc = casos * 100000 / populacao)
 ```
 
