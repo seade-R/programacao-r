@@ -24,7 +24,7 @@ O curso oferece uma iniciação à lógica de programação e ao uso da linguage
 
 [18-08-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-03.md) __Tidyverse para manipuação de dados__ - Faremos o camninho de volta ao nosso ponto de partida do curso: a manipulação de dados com a gramática do _dplyr_. Exploraremos agora aspectos diversos da manipulação de dados com mais rigor e profundidade.
 
-[25-08-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-03.md) __Bases de dados relacionais__ - No encontro de hoje seguiremos com a produção de tabelas em R, agora com o pacote _janitor_. Aprenderemos um pouco sobre factors, que é a estrutura de dados em R para variáveis categóricas. Em finalmente, veremo como trabalhar com dados relacionais em R.
+[25-08-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-04.md) __Bases de dados relacionais__ - No encontro de hoje seguiremos com a produção de tabelas em R, agora com o pacote _janitor_. Aprenderemos um pouco sobre factors, que é a estrutura de dados em R para variáveis categóricas. Em finalmente, veremo como trabalhar com dados relacionais em R.
 
 ## Referências bibliográficas
 
