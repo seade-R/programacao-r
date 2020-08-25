@@ -241,7 +241,6 @@ Por exemplo, se quiseremos exportar nossa tabela (que é um data frame) em forma
 ```{r}
 write_csv2(tabela_racacor, 'tabela_racacor.csv')
 ```
-
 O primeiro argumento é o objeto a ser exportado e o segundo é o nome do arquivo que será criado.
 
 Outra forma de escrever o mesmo comando é usando pipe (%>%):
@@ -341,7 +340,7 @@ Os totais valem para percentuais, obviamente:
 obitos_2018 %>% 
   tabyl(racacor_f, sexo_f) %>% 
   adorn_totals(where = c('col', 'row')) %>% 
-  adorn_percentages(denominator = ''all') %>% 
+  adorn_percentages(denominator = 'all') %>% 
   adorn_pct_formatting()  
 ```
 
