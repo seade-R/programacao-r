@@ -382,7 +382,7 @@ obitos_2018 %>%
 
 ```{r}
 obitos_2018 %>% 
-  filter(is.na(idade_faixa)) %>% 
+   filter(is.na(idade_faixa)) %>% 
   select(idadeanos, idade_faixa)
 ```
 

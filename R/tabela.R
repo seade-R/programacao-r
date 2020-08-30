@@ -12,8 +12,32 @@ obitos_2018 %>%
 obitos_2018 <- obitos_2018 %>% 
   clean_names() 
 
+
+# Em primeiro lugar, precisamos transformar idade anos
+# em numerica, pois foi importada como texto por haver
+# 0 à esquerda
+obitos_2018 <- obitos_2018 %>% 
+  mutate(idadeanos = as.numeric(idadeanos)) 
+# A seguir, usamos cut para transformar idade em faixas
+# para n faixas, usamos n + 1 cortes. Por exemplo, para 
+# 3 faixas usamos 4 pontos de corte
+# Note que os valores dos cortes caem sempre na faixa à direita
+# e usamos -Inf e Inf para indicar infinito em R
+obitos_2018 <- obitos_2018 %>% 
+  mutate(
+    idade_faixa = cut(idadeanos, 
+                      breaks = c(-Inf, 18, 75, Inf),
+                      labels = c('0 a 17', '18 a 74', '75 ou mais'))
+  )
+
+# Tabela
 obitos_2018 %>% 
-  glimpse()
+  tabyl(idade_faixa) %>% 
+  adorn_pct_formatting()
+
+obitos_2018 %>% 
+  filter(is.na(idade_faixa)) %>% 
+  select(idadeanos, idade_faixa)
 
 obitos_2018 %>% 
   group_by(sexo) %>% 
