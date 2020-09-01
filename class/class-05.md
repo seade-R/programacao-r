@@ -14,7 +14,7 @@ A seguir, veremos em pequenos vídeos como integrar R e Power BI. Finalmente, pa
 
 2 - Comece pelo [Tutorial 9](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-09.md) que introduz um das especialidades de R: a gramática de gráficos do pacote _ggplot2_.
 
-3 - (OPCIONAL) O [Tutorial 10](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-08.md), opcional, apresenta, com acompanhamento de vídeos, as maneiras mais simples de como integrar R e Power BI.
+3 - (OPCIONAL) O [Tutorial 10](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-10.md), opcional, apresenta, com acompanhamento de vídeos, as maneiras mais simples de como integrar R e Power BI.
 
 4 - (OPCIONAL) Em algum momento do curso, ou após, seria interessante ter uma exposição à gramática básica do R. Se, e somente se, você estiver confortável com a gramática do _dplyr_ e houver tempo, faça (ou comece) o [Tutorial 13](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-13.md)
 
