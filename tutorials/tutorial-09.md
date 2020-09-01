@@ -154,7 +154,7 @@ Melhor (melhor?), mas ainda muito branco. Vamos adicionar cor ao interior da cur
 obitos_2018 %>% 
   ggplot() + 
   geom_density(aes(x = idadeanos),
-               color = 'darkblue')
+               fill = 'darkblue')
 ```
 
 Muito pior. E se deixássemos a curva mais "transparente"?
