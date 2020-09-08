@@ -1,3 +1,10 @@
+---
+title: "PNAD Contínua no R com srvyr"
+author: "Leonardo Sangali Barone"
+date: "9/8/2020"
+output: html_document
+---
+
 # Apresentação: PNAD Contínua no R
 
 Em todos os tutoriais anteriores trabalhamos com data frames que não continham nenhuma característica especial quanto ao desenho do seu processo de coleta. Por exemplo, quando trabalhamos com municípios do Estado de São Paulo, ou notícias de investimentos no Estado de São Paulo, estávamos trabalhando com o universo dos dados. A produção de tabelas ou quaisquer outras estatísticas era direta, e não requeria nenhum processo de ponderação das unidades em análise.
@@ -12,13 +19,15 @@ Recomendo a leitura posterior da vinheta do autor de _srvyr_ que compara os paco
 
 Antes de avançar, por favor, instale ambos pacotes e carregue-os. Carregue também o _tidyverse_:
 
-```{r}
+```{r, eval = F}
 install.packages('survey')
 install.packages('srvyr')
+```
 
+```{r}
 library(tidyverse)
-library(srvyr)
 library(survey)
+library(srvyr)
 ```
 
 # O pacote _PNADcIBGE_
@@ -29,8 +38,11 @@ Neste tutorial, utilizaremos funções e códigos redundantes ao do material de 
 
 Antes de avançar, por favor, instale o pacote _PNADcIBGE_.
 
-```{r}
+```{r, eval = F}
 install.packages('PNADcIBGE')
+```
+
+```{r}
 library(PNADcIBGE)
 ```
 
@@ -59,6 +71,9 @@ E se quisermos abrir a PNAD Contínua como um data frame com a função _get\_pn
 pnad_df <- get_pnadc(year = 2020, 
                      quarter = 1,
                      design = FALSE)
+```
+
+```{r}
 class(pnad_df)
 ```
 
@@ -85,7 +100,7 @@ pnad_srv_2 <- pnadc_design(pnad_df)
 
 Há alguns outros argumentos úteis na função _get\_pnadc_. Com 'vars' podemos restringir as variáveis que serão carregadas (poupando espaço na memória RAM do seu computador, já que a PNAD é relativamente grande para um computador comum). Por exemplo, se quiseremos apenas as variáveis necessárias à identificação do processo amostral e também as variáveis 'Sexo' (V2007), 'Condição em relação à força de trabalho' (VD4001) e 'Total de Rendimentos' (VD4020), fazemos:
 
-```{r}
+```{r, eval = F}
 pnad_srv_vars <- get_pnadc(year = 2020,
                                   quarter = 1,
                                   vars = c('V2007',
@@ -95,7 +110,7 @@ pnad_srv_vars <- get_pnadc(year = 2020,
 
 Vimos _get\_pnadc_ já importa as variáveis categóricas como factors e com os rótulos dos níveis (levels) apropriados. Se, eventualmente, você quiser que os dados sejam carregados sem os rótulos e apenas com os códigos numéricos, use 'labels = FALSE'.
 
-```{r}
+```{r, eval = F}
 pnad_df_sem_rotulos <- get_pnadc(year = 2017, 
                                  quarter = 3, 
                                  design = FALSE, 
@@ -106,7 +121,7 @@ pnad_df_sem_rotulos <- get_pnadc(year = 2017,
 
 Vamos nos frustrar um pouco: vamos tentar usar algumas funções do _dplyr_ na PNAD Contínua já carregada como um objeto de survey:
 
-```{r}
+```{r, eval = F}
 pnad_srv %>% 
   filter(V2007 == 'Feminino')
 ```
