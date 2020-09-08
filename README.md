@@ -4,7 +4,7 @@ Bem vindas e bem vindos ao curso de 'Introdução à programação e ciência de
 
 ## Informações básicas
 
-### Intrutor
+### Instrutor
 
 Leonardo S. Barone
 
@@ -27,6 +27,8 @@ O curso oferece uma iniciação à lógica de programação e ao uso da linguage
 [25-08-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-04.md) __Bases de dados relacionais__ - No encontro de hoje seguiremos com a produção de tabelas em R, agora com o pacote _janitor_. Aprenderemos um pouco sobre factors, que é a estrutura de dados em R para variáveis categóricas. Em finalmente, veremo como trabalhar com dados relacionais em R.
 
 [01-09-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-05.md) __ggplot2: Gramática de gráficos__ - Agora que temos muitos recursos para manupilar dados em R, veremos como produzir gráficos com a gramática de gráficos do pacote _ggplot2_. Além disso, veremos a integração entre R e Power BI.
+
+[08-09-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-06.md) __R + SQL e PNAD Contínua no R__ - Neste último encontro trataremos de dois tópicos importantes: a integração de R com Sistemas de Gerenciamento de Bancos de Dados (SGBD) em SQL e o uso da linguagem para análise de dados de survey, em particular da PNAD Contínua.
 
 ## Referências bibliográficas
 
