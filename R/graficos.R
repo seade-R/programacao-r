@@ -9,7 +9,6 @@ obitos_2018 <- read_excel('obitos_2018.xlsx')
 obitos_2018 %>% 
   glimpse()
 
-em 
 obitos_2018 %>% 
   ggplot() + 
   geom_bar(aes(x = idadeanos))
