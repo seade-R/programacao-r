@@ -18,17 +18,21 @@ O curso oferece uma iniciação à lógica de programação e ao uso da linguage
 
 ## Programa
 
-[04-08-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-01.md) __Manipulação de dados no R e introdução__ - Na primeira aula do curso nos habituaremos à linguagem R trabalhando com uma das gramáticas mais populares de manipulação de dados em R, a do pacote _dplyr_. O curso começa, assim, não pelos elementos básicos da linguagem R, mas pelo seu uso mais comum. Dessa forma, nos habituaremos à linguagem observando seu uso a problemas concretos.
+[20-10-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-01.md) __Manipulação de dados no R e introdução__ - Na primeira aula do curso nos habituaremos à linguagem R trabalhando com uma das gramáticas mais populares de manipulação de dados em R, a do pacote _dplyr_. O curso começa, assim, não pelos elementos básicos da linguagem R, mas pelo seu uso mais comum. Dessa forma, nos habituaremos à linguagem observando seu uso a problemas concretos.
 
-[11-08-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-02.md) __Do básico ao intermediário__ - Após termos aprendido sobre data frames, vamos fazer um percurso das funcionalidades básicas da linguagem até alguns de seus usos intermediários. O objetivo do percurso é criar um repertório de funções e utilidades da linguagem que serão utilizados adiante.
+[27-10-2020] __Do básico ao intermediário__ - Após termos aprendido sobre data frames, vamos fazer um percurso das funcionalidades básicas da linguagem até alguns de seus usos intermediários. O objetivo do percurso é criar um repertório de funções e utilidades da linguagem que serão utilizados adiante.
 
-[18-08-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-03.md) __Tidyverse para manipuação de dados__ - Faremos o camninho de volta ao nosso ponto de partida do curso: a manipulação de dados com a gramática do _dplyr_. Exploraremos agora aspectos diversos da manipulação de dados com mais rigor e profundidade.
+[03-11-2020] __Tidyverse para manipuação de dados__ - Faremos o camninho de volta ao nosso ponto de partida do curso: a manipulação de dados com a gramática do _dplyr_. Exploraremos agora aspectos diversos da manipulação de dados com mais rigor e profundidade.
 
-[25-08-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-04.md) __Bases de dados relacionais__ - No encontro de hoje seguiremos com a produção de tabelas em R, agora com o pacote _janitor_. Aprenderemos um pouco sobre factors, que é a estrutura de dados em R para variáveis categóricas. Em finalmente, veremo como trabalhar com dados relacionais em R.
+[10-11-2020] __Bases de dados relacionais__ - No encontro de hoje seguiremos com a produção de tabelas em R, agora com o pacote _janitor_. Aprenderemos um pouco sobre factors, que é a estrutura de dados em R para variáveis categóricas. Em finalmente, veremo como trabalhar com dados relacionais em R.
 
-[01-09-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-05.md) __ggplot2: Gramática de gráficos__ - Agora que temos muitos recursos para manupilar dados em R, veremos como produzir gráficos com a gramática de gráficos do pacote _ggplot2_. Além disso, veremos a integração entre R e Power BI.
+[17-11-2020] __ggplot2: Gramática de gráficos__ - Agora que temos muitos recursos para manupilar dados em R, veremos como produzir gráficos com a gramática de gráficos do pacote _ggplot2_. Além disso, veremos a integração entre R e Power BI.
 
-[08-09-2020](https://github.com/seade-R/programacao-r/blob/master/class/class-06.md) __R + SQL e PNAD Contínua no R__ - Neste último encontro trataremos de dois tópicos importantes: a integração de R com Sistemas de Gerenciamento de Bancos de Dados (SGBD) em SQL e o uso da linguagem para análise de dados de survey, em particular da PNAD Contínua.
+[24-11-2020] __R + SQL e PNAD Contínua no R__ - Neste último encontro trataremos de dois tópicos importantes: a integração de R com Sistemas de Gerenciamento de Bancos de Dados (SGBD) em SQL e o uso da linguagem para análise de dados de survey, em particular da PNAD Contínua.
+
+## Edições Anteriores
+
+[Turma 1](https://github.com/seade-R/programacao-r/blob/master/turma1/README.md) (04-08-2020 a 08-09-2020)
 
 ## Referências bibliográficas
 

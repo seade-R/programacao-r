@@ -1,0 +1,306 @@
+# Apresentação: PNAD Contínua no R
+
+Em todos os tutoriais anteriores trabalhamos com data frames que não continham nenhuma característica especial quanto ao desenho do seu processo de coleta. Por exemplo, quando trabalhamos com municípios do Estado de São Paulo, ou notícias de investimentos no Estado de São Paulo, estávamos trabalhando com o universo dos dados. A produção de tabelas ou quaisquer outras estatísticas era direta, e não requeria nenhum processo de ponderação das unidades em análise.
+
+Ao trabalharmos com dados de survey, no entanto, precisamos considerar o desenho do processo amostral que gerou os dados. A maneira com que trabalhamos dados de survey em R é bastante diferente de outros softwares de análise de dados, como SPSS ou Stata. Não vamos simplesmente informar uma variável de peso ao produzir uma tabela. Em contraste, vamos transformar nosso objeto de dados (data frame) em um objeto de uma nova classe: um 'desenho de survey'. A essa classe de objetos não aplicaremos as funções que conhecemos, mas novos métodos construídos para tal classe de objetos.
+
+Neste tutorial, trabalharemos com os dados da PNAD Contínua para aprender a utilizar dados de survey. Compararemos dois pacotes que nos permitem criar objetos de classes adequadas para dados de survey. O primeiro é o pacote _survey_, bastante antigo e amplamente utilizado. O principal problema deste pacote é que ele usa dialéto próprio e dialoga mal com as gramáticas do _dplyr_ e do _ggplot2_, principais pacotes da linguagem atualmente. 
+
+Preferiremos, assim, a alternatva, que é o pacote _srvyr_, relativamente novo (e potencialmente instável). _srvyr_ é praticamente um envelopamento ('wraper') do pacote _survey_ para que se possa integrar a análise de surveys aos pacotes do _tidyverse_ sem muito esforço. Nosso principal objeto será mostrar como é possível trabalhar com dados da PNAD Contínua sem sair da gramática do _dplyr_ e, portanto, aproveitando o que aprendemos anteriormente no curso para análise da principal pesquisa regular sobre a sociedade brasileira.
+
+Recomendo a leitura posterior da vinheta do autor de _srvyr_ que compara os pacotes: [https://cran.r-project.org/web/packages/srvyr/vignettes/srvyr-vs-survey.html](https://cran.r-project.org/web/packages/srvyr/vignettes/srvyr-vs-survey.html)
+
+Antes de avançar, por favor, instale ambos pacotes e carregue-os. Carregue também o _tidyverse_:
+
+```{r}
+install.packages('survey')
+install.packages('srvyr')
+
+library(tidyverse)
+library(srvyr)
+library(survey)
+```
+
+# O pacote _PNADcIBGE_
+
+Sugiro que a leitura deste tutorial seja acompanhada da leitura posterior do material [Análise de microdados da PNAD Contínua](https://rpubs.com/BragaDouglas/335574), criado por Douglas Braga, pesquisador do IBGE. O texto apresenta o pacote _PNADcIBGE_, que carrega diretamente do IBGE os dados da PNAD Contínua e os prepara para análise com o pacote _survey_.
+
+Neste tutorial, utilizaremos funções e códigos redundantes ao do material de apresentação do pacote _PNADcIBGE_. Nosso objetivo, no entanto, será integrar o pacote _PNADcIBGE_ com _srvyr_, ausente no texto mencionado, para trabalharmos a PNAD Contínua com as gramáticas do _dplyr_ e _ggplot2_.
+
+Antes de avançar, por favor, instale o pacote _PNADcIBGE_.
+
+```{r}
+install.packages('PNADcIBGE')
+library(PNADcIBGE)
+```
+
+## Abrindo dados da PNAD Contínua com _PNADcIBGE_
+
+O pacote _PNADcIBGE_ é uma tremenda mão na roda: sua principal função é _get\_pnadc_, que carrega diretamente do IBGE os dados da PNAD Contínua. Os principais argumentos da função são o ano ('year') e o trimestre ('quarter') desejados. No tutorial, vamos trabalhar com o 1o trimestre de 2020. Tenha paciência, pois pode levar um pouco de tempo para o download e abertura de dados.
+
+```{r}
+pnad_srv <- get_pnadc(year = 2020,
+                      quarter = 1)
+```
+
+Vamos examinar a classe desse objeto:
+
+```{r}
+class(pnad_srv)
+```
+
+Os dados carregados não são um data frame, como esperaríamos. A função _get\_pnadc_ carrega o conjunto de dados e já o transforma em um objeto das classes "survey.design2" e "survey.design". Tais classes são parte do pacote _survey_ e são criadas com o uso das funções _svydesign_ e _postStratify_. O objetivo destas funções é transformar data frames em objetos que contenham peso, estrato, identifiquem a unidade de ponderação e quaisquer outros aspectos do desenho da amostra necessários para a produção de estatística.
+
+_get\_pnadc_ entrega, pois, um objeto pronto para a análise com o pacote _survey_, tal como é feito no texto que exemplifica o uso do pacote _PNADcIBGE_.
+
+E se quisermos abrir a PNAD Contínua como um data frame com a função _get\_pnadc_, é possível? Sim. Vamos repetir o processo e criar um data frame. Basta alterarmos o 
+
+```{r}
+pnad_df <- get_pnadc(year = 2020, 
+                     quarter = 1,
+                     design = FALSE)
+class(pnad_df)
+```
+
+
+Veja que 'pnad_df' é um data frame, tal como vimos ao longo do curso. _get\_pnadc_ não gerou um objeto pronto para análise com o pacote _survey_ como anteriormente.
+
+Aproveite e utilize _glimpse_ para examinar como as variáveis são importadas. Note que a maioria já é importada como factor e com os devidos rótulos de valores, outro incrível favor que a função _get\_pnadc_ nos faz.
+
+```{r}
+glimpse(pnad_df)
+```
+
+Pode ser conveniente carregar os dados como data frame, fazer as transformações necessárias para a análise para, depois, transformar o resultado em um objeto de survey. Por exemplo, se quisermos restringir o número de variáveis e linhas nos dados podemos utilizar normalmente _filter_ e _select_:
+
+```{r}
+pnad_df 
+```
+
+A outra facilidade do pacote _PNADcIBGE_ é transformar um data frame com dados da PNAD Contínua em um objeto das classes "survey.design2" e "survey.design" com a função _pnadc\_design_.
+
+```{r}
+pnad_srv_2 <- pnadc_design(pnad_df)
+```
+
+Há alguns outros argumentos úteis na função _get\_pnadc_. Com 'vars' podemos restringir as variáveis que serão carregadas (poupando espaço na memória RAM do seu computador, já que a PNAD é relativamente grande para um computador comum). Por exemplo, se quiseremos apenas as variáveis necessárias à identificação do processo amostral e também as variáveis 'Sexo' (V2007), 'Condição em relação à força de trabalho' (VD4001) e 'Total de Rendimentos' (VD4020), fazemos:
+
+```{r}
+pnad_srv_vars <- get_pnadc(year = 2020,
+                                  quarter = 1,
+                                  vars = c('V2007',
+                                           'VD4001',
+                                           'VD4020'))
+```
+
+Vimos _get\_pnadc_ já importa as variáveis categóricas como factors e com os rótulos dos níveis (levels) apropriados. Se, eventualmente, você quiser que os dados sejam carregados sem os rótulos e apenas com os códigos numéricos, use 'labels = FALSE'.
+
+```{r}
+pnad_df_sem_rotulos <- get_pnadc(year = 2017, 
+                                 quarter = 3, 
+                                 design = FALSE, 
+                                 labels = FALSE)
+```
+
+## Usando _srvyr_ na PNAD Contínua
+
+Vamos nos frustrar um pouco: vamos tentar usar algumas funções do _dplyr_ na PNAD Contínua já carregada como um objeto de survey:
+
+```{r}
+pnad_srv %>% 
+  filter(V2007 == 'Feminino')
+```
+
+(Não dá certo e você pode cancelar se demorar demais apertando "Esc").
+
+Há outras maneiras de fazer seleção de linhas ao usar o pacote _survey_, mas são pouco intuitivas. Uma alternativa é abrir os dados como data frame, como fizemos anteriormente, e depois 'informar' o desenho com a função _pnadc\_design_. A outra é utilizarmos o pacote _srvyr_.
+
+O pacote _srvyr_ trabalha com o pacote _survey_ nos bastidores. E, por esta razão, quando criamos um objeto de survey com _srvyr_, ele pertence às classes "survey.design2" e "survey.design". Mas pertence, também, a uma terceira classe "tbl\_svy", à qual podemos aplicar os métodos da gramática do _dplyr_.
+
+Vamos começar transformando o nosso objeto de survey com a função as_survey_, do pacote _srvyr_:
+
+```{r}
+pnad_srvyr <- as_survey(pnad_srv)
+```
+
+Note que agora há uma terceira classe no objeto, tal como queríamos. E a função _filter_ do _dplyr_ funciona:
+
+```{r}
+pnad_mulheres_srvyr <- pnad_srvyr %>% 
+  filter(V2007 == 'Feminino')
+```
+
+O novo objeto é igual ao anterior, mas inclui apenas as observações para mulheres.
+
+As funções _filter_, _rename_, _mutate_ e _select_ funcionam em objetos da classe "tbl\_svy". Algumas dessas operações, em particular _rename_ e _mutate_, são inviáveis em objetos de survey que não perteçam a essa classe.
+
+Recapitulando, tomamos o resultado da importação dos dados da PNAD Contínua com _get\_pnadc_ *como um objeto de survey* e aplicamos a função _as\_survey_ para que possamos utilizar os verbos do _dplyr_ normalmente.
+
+## Comparando as gramáticas dos pacotes _survey_ e _srvyr_
+
+Vamos calcular algumas estatísticas simples para comparar os pacotes. Comecemos com a variável de renda (VD4020: 'Rendimento mensal efetivo de todos os trabalhos para pessoas de 14 anos ou mais de idade (apenas para pessoas que receberam em dinheiro, produtos ou mercadorias em qualquer trabalho)'). Note que vamos usar sempre o objeto 'pnad\_srvyr', pois podemos aplicar nele funções de ambos pacotes.
+
+Em dados de survey não podemos trabalhar com as funções de estatísticas descritiva padrão -- _mean_, _sd_, _quantile_, etc. Precisaremos de funções específicas para survey. No pacote _survey_ calculamos a média de uma variável numérica, por exemplo, da seguinte maneira:
+
+```{r}
+svymean(~VD4020, pnad_srvyr, na.rm = T)
+```
+
+Precisamos, em primeiro lugar, de uma 'fórmula', que identifica a variável para a qual aplicaremos a função. Dizemos 'fórmula', pois precisamos do símbolo '\~' antes de uma variável ou de uma combinação de variáveis, como veremos adiante. A seguir, inserimos o objeto de survey no qual a operação ocorrerá. Também decidimos excluir os NA que existirem.
+
+Veja agora como fazer a mesma operação com o pacote _srvyr_. Utilizaremos o verbo _summarise_ do _dplyr_ e, dentro de _summarise_, a função de estatística desejada.
+
+```{r}
+pnad_srvyr %>% 
+  summarise(media_renda = survey_mean(VD4020, na.rm = T))
+```
+
+Neste primeiro momento, pode parecer que é mais trabalhoso utilizar o pacote _srvyr_. No entanto, rapidamente a facilidade da gramática 'no estilo do _dplyr_' supera o dialéto pouco falado do pacote _survey_, nem sempre em número de caracteres digitados, mas em clareza do código.
+
+Por exemplo, para produzir a proporção por grau de instrução para homens, pardos com mais de 30 anos na PNAD-C do 1o trimestre de 2020 com o pacote _survey_ fazemos:
+
+```{r}
+svymean(~VD3004,  subset(pnad_srvyr, V2007 == "Homem" & V2010 == "Parda" & V2009 > 30), na.rm = T)
+```
+
+E com o pacote _srvyr_:
+
+```{r}
+pnad_srvyr %>% 
+  filter(V2007 == "Homem",
+         V2010 == "Parda",
+         V2009 > 30) %>% 
+  group_by(VD3004) %>% 
+  summarise(freq = survey_mean())
+```
+
+O código é praticamente idêntico a de uma tabela em um data frame comum (não-survey), salvo pelo uso de _survey_mean_ no lugar comumente ocupado por _mean_. Outra vantagem importante de _srvyr_ em relação a _survey_ é que os resultados de _srvyr_ são também data frames, e, portanto, podem ser usados na sequência com qualquer função de _dplyr_ e _ggplot2_.
+
+Um terceiro exemplo da diferença entre as gramáticas: uma tabela de duas entradas de sexo e grau de instrução. Primeiro, com _survey_:
+ 
+```{r}
+svyby(~V2007, ~VD3004, pnad_srvyr, svymean, na.rm = T)
+```
+
+A seguir, com _srvyr_:
+
+```{r}
+pnad_srvyr %>% 
+  group_by(V2007, VD3004) %>% 
+  summarise(freq = survey_mean())
+```
+
+O output em formato _long_, padrão do _dplyr_, torna sua manipulação posterior e a confecção de gráficos mais simples.
+
+O uso do pacote _survey_ para a PNAD Contínua está bem descrito na apresentação do pacote _PNADcIBGE_. Recomendo a leitura. Vamos agora prosseguir apenas com o pacote _srvyr_ para aprendermos sobre o básico de análise de dados de survey.
+
+## Principais funções de sumário estatítico
+
+No código abaixo podemos inferir rapidamente o uso das principais funções de sumário estatístico do pacote _srvyr_ em um variável numérica, como renda mensal de todos os trabalhos (todas elas 'wrapers' de funções análogas do pacote _survey_):
+
+```{r}
+pnad_srvyr %>% 
+  summarise(total = survey_total(VD4020, na.rm = T))
+pnad_srvyr %>% 
+  summarise(media = survey_mean(VD4020, na.rm = T))
+pnad_srvyr %>% 
+  summarise(mediana = survey_median(VD4020, na.rm = T))
+pnad_srvyr %>% 
+  summarise(q10 = survey_quantile(VD4020, quantiles = 0.1, na.rm = T))
+pnad_srvyr %>% 
+  summarise(q90 = survey_quantile(VD4020, quantiles = 0.9, na.rm = T))
+pnad_srvyr %>% 
+  summarise(var = survey_var(VD4020, na.rm = T))
+pnad_srvyr %>% 
+  summarise(sd = survey_sd(VD4020, na.rm = T))
+```
+
+Seu uso para variáveis categóricas é semelhante. Porém, precisamos do auxílio da dupla de verbos _group\_by_ e _summarise_. Vamos ver a contagem e a frequência relativa dos grupos de sexo:
+
+```{r}
+pnad_srvyr %>% 
+  group_by(V2007) %>% 
+  summarise(n = survey_total())
+```
+
+```{r}
+pnad_srvyr %>% 
+  group_by(V2007) %>% 
+  summarise(freq = survey_mean())
+```
+
+Seja com survey_mean ou survey_total, é possível alterar o resultado da função, que por default traz o desvio padrão, para intervalo de confiança de 95% com o argumento 'vartype':
+
+```{r}
+pnad_srvyr %>% 
+  group_by(V2007) %>% 
+  summarise(freq = survey_mean(vartype = "ci"))
+```
+
+Podemos adicionar rapidamente outra variávei para fazer o cruzamento com a variável sexo:
+
+```{r}
+pnad_srvyr %>% 
+  group_by(V2007, V2010) %>% 
+  summarise(freq = survey_mean())
+```
+
+Os verbos do _dplyr_ estão à nossa disposição para retrabalharmos os dados. Refazendo a tabela só para homens:
+
+```{r}
+pnad_srvyr %>% 
+  filter(V2007 == 'Homem') %>% 
+  group_by(V2010) %>% 
+  summarise(n = survey_mean()) 
+```
+
+Ou recodificando raça/cor:
+
+```{r}
+pnad_srvyr %>% 
+  mutate(ppi = case_when(
+    V2010 == 'Preta' ~ 'PPI',
+    V2010 == 'Parda' ~ 'PPI',
+    V2010 == 'Indígena' ~ 'PPI',
+    T ~ 'Não PPI'
+  )) %>% 
+  group_by(V2007, ppi) %>% 
+  summarise(n = survey_mean()) 
+```
+
+Pivotando a tabela com _pivot\_wider_
+
+```{r}
+pnad_srvyr %>% 
+  mutate(ppi = case_when(
+    V2010 == 'Preta' ~ 'PPI',
+    V2010 == 'Parda' ~ 'PPI',
+    V2010 == 'Indígena' ~ 'PPI',
+    T ~ 'Não PPI'
+  )) %>% 
+  group_by(V2007, ppi) %>% 
+  summarise(freq = survey_mean()) %>% 
+  select(-freq_se) %>% 
+  pivot_wider(names_from = ppi,
+              values_from = freq)
+```
+
+Finalmente, vamos trabalhar simultaneamente com uma ou mais variáveos categóricas e o sumário estatística de uma variável numérica por categoria. A variável a ser sumarizada deve ir dentro das funções com sufixo 'survey\_'. Por exemplo, renda mensal de trabalho por sexo:
+
+```{r}
+pnad_srvyr %>% 
+  group_by(V2007) %>% 
+  summarise(media_renda = survey_mean(VD4020, na.rm = T))
+```
+
+Ou por sexo e raça/cor:
+
+```{r}
+pnad_srvyr %>% 
+  group_by(V2007, V2010) %>% 
+  summarise(media_renda = survey_mean(VD4020, na.rm = T))
+```
+
+É possível quase esquecer que estamos trabalhando com dados de _survey_ quando usamos o pacote _srvyr_. Se você assimilou bem o uso do _dplyr_, a construção de tabelas com este pacote fica bastante mais fácil.
+
+
