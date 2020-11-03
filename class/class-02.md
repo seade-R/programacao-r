@@ -2,7 +2,7 @@
 
 ## Aviso
 
-Adiamos este 2o encontro. Discutiremos em breve uma nova data. Ainda assim, você pode aproveitar a aula adiada para estudar um pouco de R.
+Adiamos este 2o encontro para o dia 03-11-20. Ainda assim, você pode aproveitar a aula adiada para estudar um pouco de R.
 
 ## Objetivos Gerais
 
