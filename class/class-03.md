@@ -10,11 +10,11 @@ No primeiro encontro trabalhamos com a gramática do pacote _dplyr_ para manipul
 
 1 - Entre 9h às 9h30, leia as instruções deste roteiro. Se deixou algum tutorial inacabado do encontro anterior, comece a ele. Caso contrário, prossiga.
 
-2 - Comece pelo [Tutorial 5](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-05.md) que trata da importação de dados em R. Se quiser, pode assistir a dois vídeos, um sobre como abrir dados de SPSS com o botão Import Dataset (https://www.youtube.com/watch?v=PPeoKJqQNX4) e outro como escolher o encoding do arquivo ao usar o botão Import Dataset para abrir arquivos de texto (em breve).
+2 - Comece pelo [Tutorial 5](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-05.md) que trata da importação de dados em R. Se quiser, pode assistir um vídeo sobre como abrir dados de SPSS com o botão Import Dataset (https://www.youtube.com/watch?v=PPeoKJqQNX4).
 
 3 - A seguir vá para o [Tutorial 6](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-06.md), que retoma o exemplo da PIESP e discute um pouco sobre a produção de tabelas na gramática do _dplyr_. 
 
-4 - Ao terminar, comece a [Atividade 1](https://github.com/seade-R/programacao-r/blob/master/activities/activity-01.md).
+4 - Se houver tempo, comece o [Tutorial 7](https://github.com/seade-R/programacao-r/blob/master/tutorials/tutorial-07.md), que apresenta o pacote _janitor_ para confecção de tabelas de frequência em R de um jeito simples.
 
 Não nos encontraremos no Zoom novamente no final da manhã. Mas estou à disposição para tirar dúvidas por whatsapp e para produzir material de apoio que facilite seu aprendizado.
 
