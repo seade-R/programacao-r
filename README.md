@@ -6,7 +6,7 @@ Bem vindas e bem vindos ao curso de _Introdução à Programação e Ciência de
 
 O curso oferece uma iniciação à lógica de programação e ao uso da linguagem R para organização, análise e apresentação de dados. O foco do curso é o desenvolvimento da habilidade de programação para solução de problemas diversos relacionados ao manejo de dados, com ênfase na preparação de dados para análise, na visualização de dados e na produção de estatísticas descritivas. R é uma linguagem de código aberto e desenvolvimento comunitário e se tornou uma das linguagens de programação e análise de dados mais populares em diversos campos científicos e profissionais.
 
-O curso foi concebido por [Leonardo S. Barone](https://github.com/leobarone), e os materiais do curso foram elaborados por Leonardo S. Barone, e revisados por [Thandara Santos](https://github.com/thandarasantos) e [Lucas Gelape](https://github.com/lgelape).
+O curso foi concebido por [Leonardo S. Barone](https://github.com/leobarone), os materiais do curso foram elaborados por Leonardo S. Barone, e revisados por [Thandara Santos](https://github.com/thandarasantos) e [Lucas Gelape](https://github.com/lgelape).
 
 ## Edição atual
 
