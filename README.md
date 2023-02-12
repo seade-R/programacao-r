@@ -10,7 +10,7 @@ O curso foi concebido por [Leonardo S. Barone](https://github.com/leobarone), os
 
 ## Edição atual
 
-* [**SEADE/2022**: Programa de Estágio da Fundação SEADE -- Turma 1, 14/02-16/02](/turmas/2022_estagio_turma1/README.md)
+* [**SEADE/2023**: Programa de Estágio da Fundação SEADE -- Turma 1, 14/02/2023-16/02/2023](/turmas/2023_estagio_turma1/README.md)
 
 ### Informações básicas
 
