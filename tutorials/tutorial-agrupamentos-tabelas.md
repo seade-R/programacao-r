@@ -148,7 +148,7 @@ piesp_2 %>%
             maximo = max(valor, na.rm = T))
 ```
 
-Como temos que repetir muitas vezes o argumento de exclusão de missings, o mais simples é refazermos o código usando `filter` para eliminarmos os NAs da variável **valor** antes de fazermos o agrupamento:
+Como temos que repetir muitas vezes o argumento de exclusão de missings, o mais simples é refazermos o código usando `filter()` para eliminarmos os NAs da variável **valor** antes de fazermos o agrupamento:
 
 ``` r
 piesp_2 %>% 
