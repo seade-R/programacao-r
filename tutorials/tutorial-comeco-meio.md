@@ -276,7 +276,7 @@ piesp <- piesp %>%
          tipo = `Tipo Investimento`)
 ```
 
-Usando o operador %\>%, denominado *pipe*, retiramos de dentro da função `rename` o banco de dados cujas variáveis serão renomeadas. As quebras de linha depois do %\>% e dentro da função `rename` são opcionais. Porém, o padrão é 'verticalizar o código' e colocar os 'verbos' (no caso, o verbo `rename`) à esquerda, o que torna sua leitura mais confortável.
+Usando o operador `%>%`, denominado *pipe*, retiramos de dentro da função `rename()` o banco de dados cujas variáveis serão renomeadas. As quebras de linha depois do `%>%` e dentro da função `rename()` são opcionais. Porém, o padrão é 'verticalizar o código' e colocar os 'verbos' (no caso, o verbo `rename()`) à esquerda, o que torna sua leitura mais confortável.
 
 Compare com o código que havíamos executado anteriormente:
 
@@ -332,7 +332,7 @@ O que o operador **pipe** faz é simplesmente colocar o primeiro argumento da fu
 
 A grande vantagem de trabalharmos com o operador `%>%` é não precisar repetir o nome do *data frame* diversas vezes ao aplicarmos a ele um conjunto de operações.
 
-Vejamos agora como usamos o operador `%\>%` para "emendar" tarefas, começando da abertura dos dados, passando pela ação de renomear as variáveis e, enfim, pela seleção de variáveis. Note que o primeiro input (entrada de dados) é o url da base de dados e, que, uma vez carregada, vai sendo transformada a cada novo verbo.
+Vejamos agora como usamos o operador `%>%` para "emendar" tarefas, começando da abertura dos dados, passando pela ação de renomear as variáveis e, enfim, pela seleção de variáveis. Note que o primeiro input (entrada de dados) é o url da base de dados e, que, uma vez carregada, vai sendo transformada a cada novo verbo.
 
 ``` r
 piesp <- read_csv2('https://raw.githubusercontent.com/seade-R/egesp-seade-intro-programacao/master/data/piesp.csv') %>% 

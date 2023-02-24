@@ -8,19 +8,17 @@ No primeiro encontro trabalhamos com a gramática do pacote `dplyr` para manipul
 
 1 - Ao iniciar as atividades de hoje, leia as instruções deste roteiro. Se deixou algum tutorial inacabado do encontro anterior, comece por ele. Caso contrário, prossiga.
 
-2 - Às 9h30/14h30 faremos um encontro virtual (Teams) de 10-15 minutos para falarmos dos objetivos de hoje e tirarmos dúvidas sobre o encontro anterior.
+2 - Às 9h15/14h15 faremos um encontro virtual (Teams) de 10-15 minutos para falarmos dos objetivos de hoje e tirarmos dúvidas sobre o encontro anterior.
 
 3 - Comece por [este tutorial](/tutorials/tutorial-importacao-dados.md) que trata da importação de dados em R. Se quiser, pode [assistir um vídeo](https://www.youtube.com/watch?v=PPeoKJqQNX4) sobre como abrir dados de SPSS com o botão **Import Dataset**.
 
 4 - A seguir vá para [este tutorial](/tutorials/tutorial-agrupamentos-tabelas.md), que retoma o exemplo da PIESP e discute um pouco sobre a produção de tabelas na gramática do _dplyr_. 
 
-5 - Aprenderemos [neste tutorial](/tutorials/tutorial-joins-1.md), sobre como trabalhar com dados relacionais na gramática do `dplyr`. Se quiser praticar mais sobre este ponto, use [este tutorial][/tutorials/tutorial-joins-2.md] 
+5 - Aprenderemos [neste tutorial](/tutorials/tutorial-joins-1.md), sobre como trabalhar com dados relacionais na gramática do `dplyr`. Se quiser praticar mais sobre este ponto, use [este tutorial](/tutorials/tutorial-joins-2.md). 
 
-6 - Às 10h15/15h15 faremos um encontro virtual (Teams) de 15-30 minutos para falarmos sobre alguns conteúdos do encontro de hoje.
+6 - Às 11h30/16h30 faremos um encontro virtual (Teams) de 15-30 minutos para falarmos sobre alguns conteúdos do encontro de hoje, tirar as últimas dúvidas e encerrar nossas atividades.
 
-7 - Por volta de 11h30-11h45/16h30-16h45 vamos nos reunir para tirar as últimas dúvidas e encerrar nossas atividades.
-
-8 - Se você tiver terminado todos os tutoriais antes do final dos nossos encontros, explore os seguintes tutoriais (nessa ordem):
+7 - Se você tiver terminado todos os tutoriais antes do final dos nossos encontros, explore os seguintes tutoriais (nessa ordem):
 
 * [`janitor`, `factor` e tabelas simples na gramática do `dplyr`](/tutorials/tutorial-janitor-factor.md)
 * [Manipulação de dados com a gramática básica do R](/tutorials/tutorial-r-base-manipulacao.md)
