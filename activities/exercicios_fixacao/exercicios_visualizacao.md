@@ -16,14 +16,13 @@ library(tidyr)
 library(lubridate)
 ```
 
-A partir do banco de dados carregado abaixo, faça as atividades a seguir.
+Baixe o banco de [dados de casos e óbitos por município e data](https://repositorio.seade.gov.br/dataset/covid-19/resource/d2bad7a1-6c38-4dda-b409-656bff3fa56a) do Repositório do SEADE, descomprima o arquivo e mova o arquivo "dados_covid_sp.csv" para a sua pasta de trabalho. Carregue o arquivo:
 
 ``` r
-dados_covid_sp <- read_csv2("https://raw.githubusercontent.com/seade-R/dados-covid-sp/master/data/dados_covid_sp.csv", col_types = "ccDnnnnnnnnccnn")
+dados_covid_sp <- read_csv2("dados_covid_sp.csv")
 
 dados_covid_sp <- dados_covid_sp %>% 
-  mutate(ano = lubridate::year(datahora),
-         mes = lubridate::month(datahora))
+  mutate(ano = lubridate::year(datahora))
 ```
 
 **2)** Filtre os dados para o ano de 2021 e exclua os municípios da DRS de Grande São Paulo do banco. Em seguida, some o numero de obitos ocorridos nesse ano por município. Por fim, faça um histograma da variável de total de óbitos, alterando o argumento `bins`.
@@ -38,7 +37,19 @@ Explore o banco de dados e reflita sobre o que significa o `NA` no resultado. Co
 
 **5)** Faça um gráfico de linhas com o total de novos óbitos por dia na cidade de São Paulo, alterando outros elementos do gráfico como nome dos eixos e título. Caso esteja insatisfeito com o gráfico, tente criar uma variável de média móvel de óbitos (dica: veja a função `rollapply()` do pacote `zoo`) e refaça seu gráfico.
 
-**6)** Com o código abaixo, vamos criar duas váriaveis: óbitos nos anos de 2021 e 2022 por cada dia do ano no estado de SP.
+**6)** Com o código abaixo, vamos criar um novo objeto com as seguintes informações: óbitos nos anos de 2021 e 2022 por cada dia-mês do ano no estado de SP.
+
+``` r
+sp_mes <- dados_covid_sp %>%
+  filter(ano != 2020 & ano != 2023) %>%
+  mutate(mesdia = str_c(mes, dia)) %>% 
+  group_by(ano, mesdia) %>%
+  summarise(obitos = sum(obitos_novos)) %>%
+  ungroup() %>%
+  pivot_wider(id_cols = mesdia, names_from = ano, values_from = obitos) %>%
+  rename(obitos2021 = `2021`,
+         obitos2022 = `2022`)
+```
 
 Agora, crie um diagrama de dispersão que contenha essas duas variáveis. Por fim, tente plotar uma linha de regressão para a relação entre essas duas variáveis. Você nota alguma relação entre essas variáveis?
 
