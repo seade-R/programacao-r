@@ -12,10 +12,10 @@ library(readr)
 library(lubridate)
 ```
 
-A partir do banco de dados carregado abaixo, faça as atividades a seguir.
+Baixe o banco de [dados de casos e óbitos por município e data](https://repositorio.seade.gov.br/dataset/covid-19/resource/d2bad7a1-6c38-4dda-b409-656bff3fa56a) do Repositório do SEADE, descomprima o arquivo e mova o arquivo "dados_covid_sp.csv" para a sua pasta de trabalho. Carregue o arquivo:
 
 ``` r
-dados_covid_sp <- read_csv2("https://raw.githubusercontent.com/seade-R/dados-covid-sp/master/data/dados_covid_sp.csv", col_types = "ccDnnnnnnnnccnn")
+dados_covid_sp <- read_csv2("dados_covid_sp.csv")
 ```
 
 Caso tenha alguma dificuldade, volte aos tutoriais do curso para pensar em funções que possam te ajudar.
@@ -28,12 +28,11 @@ glimpse(dados_covid_sp)
 head(dados_covid_sp)
 ```
 
-**2)** Selecione somente as colunas referentes ao código do município, mês, ano, novos casos, novos óbitos e código da DRS. A seguir, apresentamos um código para criação das variáveis mês e ano, que serão úteis em nossas análises.
+**2)** Após criar a variável `ano`, utilizando o código abaixo, selecione somente as colunas referentes ao código do município, mês, ano, novos casos, novos óbitos e código da DRS.
 
 ``` r
 dados_covid_sp <- dados_covid_sp %>% 
-  mutate(ano = lubridate::year(datahora),
-         mes = lubridate::month(datahora))
+  mutate(ano = lubridate::year(datahora))
 ```
 
 ``` r
@@ -68,7 +67,7 @@ populacao2021 <- populacao2021 %>%
 
 ``` r
 populacao2021 <- populacao2021 %>%
-  mutate(codigo_ibge = as.character(codigo_ibge))
+  mutate(cod_ibge = as.character(cod_ibge))
 ```
 
 
@@ -79,9 +78,8 @@ obitos_mun <- dados_covid_sp %>%
   filter(ano == 2021) %>%
   group_by(codigo_ibge) %>%
   summarise(obitos = sum(obitos_novos)) %>%
-  ungroup() 
-
-populacao2021 <- mutate(populacao2021, cod_ibge = as.character(cod_ibge))
+  ungroup() %>%
+  mutate(codigo_ibge = as.character(codigo_ibge))
 
 join_obitos <- left_join(obitos_mun, populacao2021, by = c("codigo_ibge" = "cod_ibge")) 
 
@@ -98,7 +96,8 @@ drs <- read.csv2("https://raw.githubusercontent.com/seade-R/programacao-r/master
   mutate(cod_drs = as.character(cod_drs))
 
 dados_covid_sp <- dados_covid_sp %>%
-  left_join(drs, by = c("cod_drs"))
+  mutate(cod_drs = as.character(cod_drs)) %>%
+  left_join(drs, by = "cod_drs")
 
 dados_covid_sp %>% glimpse()
 ```

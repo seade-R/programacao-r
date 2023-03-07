@@ -12,10 +12,10 @@ library(readr)
 library(lubridate)
 ```
 
-A partir do banco de dados carregado abaixo, faça as atividades a seguir.
+Baixe o banco de [dados de casos e óbitos por município e data](https://repositorio.seade.gov.br/dataset/covid-19/resource/d2bad7a1-6c38-4dda-b409-656bff3fa56a) do Repositório do SEADE, descomprima o arquivo e mova o arquivo "dados_covid_sp.csv" para a sua pasta de trabalho. Carregue o arquivo:
 
 ``` r
-dados_covid_sp <- read_csv2("https://raw.githubusercontent.com/seade-R/dados-covid-sp/master/data/dados_covid_sp.csv", col_types = "ccDnnnnnnnnccnn")
+dados_covid_sp <- read_csv2("dados_covid_sp.csv")
 ```
 
 Caso tenha alguma dificuldade, volte aos tutoriais do curso para pensar em funções que possam te ajudar.
@@ -23,13 +23,13 @@ Caso tenha alguma dificuldade, volte aos tutoriais do curso para pensar em funç
 
 **1)** "Espie" dentro do objeto para verificar se ele foi aberto corretamente (em hipótese alguma clique no ícone de tabela no painel de ambiente ou use a função `View()`).
 
-**2)** Selecione somente as colunas referentes ao código do município, mês, ano, novos casos, novos óbitos e código da DRS. A seguir, apresentamos um código para criação das variáveis mês e ano, que serão úteis em nossas análises.
+**2)** Após criar a variável `ano`, utilizando o código abaixo, selecione somente as colunas referentes ao código do município, mês, ano, novos casos, novos óbitos e código da DRS.
 
 ``` r
 dados_covid_sp <- dados_covid_sp %>% 
-  mutate(ano = lubridate::year(datahora),
-         mes = lubridate::month(datahora))
+  mutate(ano = lubridate::year(datahora))
 ```
+
 **4)** Calcule a soma total de casos e obitos por municipio do estado de SP ao longo de toda a pandemia, guardando esse resultado em um novo objeto, ordenando este banco do municipio com maior numero de obitos até o menor.
 
 **5)** Importe a tabela de população por município do estado de São Paulo em 2021 do [repositório do curso](https://raw.githubusercontent.com/seade-R/programacao-r/master/data/populacao_2021_portepopulacional_esp.csv) por meio da função `read_csv2()` (atenção para o encoding). 
