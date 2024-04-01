@@ -14,7 +14,7 @@ O curso foi concebido por [Leonardo S. Barone](https://github.com/leobarone), os
 
 #### Informações básicas
 
-* **Instrutor**: Lucas Gelape 
+* **Instrutor**: Lucas Mingardo 
 * **Monitor**: André Meyer
 * **Local**: virtual
 * **Data**: * **Data**: 25/04/2024, 26/04/2024, 29/04/2024
