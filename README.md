@@ -8,7 +8,8 @@ O curso oferece uma iniciação à lógica de programação e ao uso da linguage
 
 O curso foi concebido por [Leonardo S. Barone](https://github.com/leobarone), os materiais do curso foram elaborados por Leonardo S. Barone, e revisados por [Thandara Santos](https://github.com/thandarasantos), [Lucas Gelape](https://github.com/lgelape) e [Lucas Mingardo](https://github.com/lumardi).
 
-## Edição atual: https://github.com/seade-R/programacao-r/tree/master/turmas/2024_estagio_turma1
+## Edição atual: * [**SEADE/2024**: Programa de Estágio da Fundação SEADE -- Turma 1, 25/04/2024, 29/04/2024, 30/04/204](/turmas/2024_estagio_turma1/README.md)
+
 
 ### 
 
