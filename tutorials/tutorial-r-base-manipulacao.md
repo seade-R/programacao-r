@@ -118,7 +118,7 @@ Note que o resultado é semelhante ao de:
 fake$sex
 ```
 
-No entanto, no primeiro caso estamos produzindo um *data frame* de uma única coluna, enquanto no segundo estamos produzinho um vetor. _Exceto pela classe_, eles são idênticos.
+No entanto, no primeiro caso estamos produzindo um *data frame* de uma única coluna, enquanto no segundo estamos produzinho um *vetor*. _Exceto pela classe_, eles são idênticos.
 
 Segunda e sétima colunas:
 
@@ -412,3 +412,28 @@ names(fake)[6] <- "casado"
 ```
 
 Simples, porém um pouco chato.
+
+## Excluindo variáveis
+
+Vimos que para excluir variáveis com a gramática do `dplyr` utilizamos o sinal negativo ("-") para eliminar as variáveis indesejadas. 
+
+Similarmente, para o R base podemos abusar das propriedades do objeto especial `NULL` se quisermos eliminar uma coluna.
+
+Como o nome sugere, `NULL` representa a _ausência_ de valores. É diferente de `NA`, portanto, uma vez que os valores de `NA` _existem, mas são desconhecidos_, enquanto que os valores de `NULL` simplesmente _não existem_. 
+
+Novamente, vamos criar uma nova variável:
+
+``` r
+fake$nova_variavel <- NA
+names(fake)
+```
+
+Caso queiramos eliminar essa nova variável, portanto, podemos fazer a seguinte operação:
+
+``` r
+fake$nova_variavel <- NULL
+names(fake)
+```
+
+Dessa forma, com esse exemplo prático aprendemos não só como excluir colunas via R base, mas também a diferença prática dos valores especiais `NA` e `NULL`.
+

@@ -227,7 +227,9 @@ Neste segundo exercício, vamos calcular o número de casos de COVID-19 por 100 
 Vamos começar obtendo dados sobre a projeção das populações municipais em 2020, disponível em arquivo disponíbilizado pelo SEADE em seu [repositório](https://repositorio.seade.gov.br/dataset/populacao-municipal-2010-2022/resource/4a05d680-ab13-428a-abef-3c6f69a6f800):
 
 ``` r
-pop20 <- read_csv2('https://raw.githubusercontent.com/seade-R/egesp-seade-intro-programacao/main/data/populacao_municipal.csv')
+pop20 <- read_csv2('https://raw.githubusercontent.com/seade-R/egesp-seade-intro-programacao/main/data/populacao_municipal.csv',
+                    locale=locale(encoding = "Latin2")
+                    )
 ```
 
 Examinando os dados:
@@ -301,7 +303,7 @@ df_left %>%
 
 Como "Ignorado" não existe em `pop20`, as variáveis para esta linha provenientes do _data frame_ de população recebem `NA`.
 
-A operação de `right_join()` é idêntica à de `left_join()` se trocarmos os _data frames_ de posição. Intuitivamente, faz mais sentido usar a combinação "esquerda"", pois em geral queremos acrescentar colunas de uma segunda fonte de dados àquela com a qual estamos trabalhando. Note que as variáveis que servem como chave dentro do argumento `by` também trocam de posição.
+A operação de `right_join()` é idêntica à de `left_join()` se trocarmos os _data frames_ de posição. Intuitivamente, faz mais sentido usar a combinação "esquerda", pois, em geral, queremos acrescentar colunas de uma segunda fonte de dados àquela com a qual estamos trabalhando. Note que as variáveis que servem como chave dentro do argumento `by` também trocam de posição.
 
 ``` r
 df_right <- pop20 %>% 
@@ -332,7 +334,7 @@ Não importa qual é o _data frame_ à esquerda ou à direita. O resultado para 
 
 Há outros 2 joins bastante úteis em R: `semi_join()` e `anti_join()`. São os chamados _filtering joins_. Seu uso é diferente dos demais. Não produzem um novo _data frame_ com a combinação das colunas das duas fontes de dados.
 
-O `semi_join` resulta em um _data frame_ com as mesmas colunas do _data frame_ à esquerda, apenas, e com os casos do _data frame_ à esquerda que encontram correspondência no conjunto à direita.
+O `semi_join` resulta em um _data frame_ com as mesmas colunas do _data frame_ à esquerda, apenas, e com os casos do _data frame_ à esquerda que encontram correspondência no conjunto à direita. 
 
 Vamos trocar as posições colocar agora `pop20` à esquerda e `covid_maio` à direita e aplicar a função `semi_ join()`.
 
@@ -343,7 +345,27 @@ df_semi <- pop20 %>%
 
 O resultado é um _data frame_ igual a `pop20`, mas sem as linhas de municípios que não têm par em `covid_maio`. É como aplicassemos em `pop20` um filtro que, por extenso, seria lido como: "manter apenas os municípios também encontrados em `covid_maio`". O resultado, como esperávamos, tem 326 linhas.
 
-O _anti join_ é a operação complementar à de _semi join_: são mantidas apenas as linhas do conjunto à esquerda que __não__ encontram par no _data frame_ à direita.
+Note que há uma diferença importante entre o `semi_join` e o `inner_join` que aprendemos lá atrás. Enquanto que o inner_join _combina_ os dois bancos de dados, o semi_join _filtra_ as linhas do banco da esquerda, mantendo as linhas cujos valores da variável chave foram encontrados no banco da direita. 
+
+Para facilitar a compreensão, vamos criar novo bancos de dados com um número menor de linhas: 
+
+``` r
+dados_a <- data.frame(
+  id = c("a","b","c","d","e"),
+  valor = c(1, 2, 3, 4, 5)
+)
+
+dados_b <- data.frame(
+  id = c("a","b","b","b","b"),
+  outro_valor = c(10, 9, 8, 7, 6)
+)
+
+semi_join(dados_a, dados_b)
+
+inner_join(dados_a, dados_b)
+```
+
+Já o _anti join_ é a operação complementar à de _semi join_: são mantidas apenas as linhas do conjunto à esquerda que __não__ encontram par no _data frame_ à direita.
 
 ``` r
 df_anti <- pop20 %>% 

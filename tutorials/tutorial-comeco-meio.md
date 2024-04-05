@@ -24,7 +24,7 @@ install.packages('tidyverse')
 
 Pronto. Seu computador (ou seu usuário no servidor RStudio) tem o pacote `tidyverse` instalado (e ele contém o pacote `dplyr`).
 
-Lembre-se de colocar aspas no nome do pacote, pois, até agora, `tidyverse` é um nome desconhecido para a linguagem R no seu computador. E qualquer texto arbitrário em R deve vir entre aspas, não importa se simples ou duplas.
+Lembre-se de colocar aspas no nome do pacote, pois, até agora, `tidyverse` é um nome desconhecido para a linguagem R no seu computador. E qualquer texto arbitrário em R deve vir entre aspas, não importa se simples ('') ou duplas ("").
 
 A partir da instalação, sempre que quisermos utilizar o pacote `tidyverse` devemos carregá-lo com a função `tidyverse`. Você deve fazer isso toda vez que abrir o RStudio. É importante notar que você só precisará instalar os pacotes uma vez em sua máquina ou em seu servidor remoto, mas precisará carregá-los toda vez que for iniciar uma nova sessão.
 
@@ -119,7 +119,7 @@ Repetindo o procedimento, para abrir os dados da PIESP basta fazer:
 piesp <- read_csv2('https://raw.githubusercontent.com/seade-R/egesp-seade-intro-programacao/master/data/piesp.csv')
 ```
 
-Em R, as funções "read." são as funções de abertura de dados do `base` e as funções *read* são as análogas do pacote `readr`, parte do `tidyverse`. Há funções *read* para abrir todos os tipos de dados, de arquivos de texto a páginas em HTML.
+Em R, as funções "read." são as funções de abertura de dados do `base` e as funções *read_* são as análogas do pacote `readr`, parte do `tidyverse`. Há funções *read_* para abrir todos os tipos de dados, de arquivos de texto a páginas em HTML.
 
 No nosso caso, utilizamos a função `read_csv2()` para abrir um arquivo de texto cujos valores das colunas são separados por ponto e vírgula. Veremos no futuro e com mais calma outras possibilidades para carregar dados em R.
 
@@ -197,6 +197,8 @@ Podemos fazer comentários no meio do código. Basta usar `#` e tudo que seguir 
 names(piesp)
 
 names(piesp) # Repetindo o comando acima com comentario em outro lugar
+
+# Se colocamos o comentário a esquerda deixamos de rodar a linha toda. O código a seguir não será rodado: names(piesp)
 ```
 
 Comentários são extremamente úteis para documentar seu código. Use e abuse. Documentar é parte de programar e você deve pensar nas pessoas com as quais vai compartilhar o código e no fato de que com certeza não se lembrará do que fez em pouco tempo (garanto, você vai esquecer).
@@ -241,7 +243,7 @@ Vamos agora renomear os dados.
 
 ## NA quer dizer 'missing'
 
-O símbolo `NA` em R quer dizer valor faltante (missing value). Na coluna de valores dos investimentos há diversos NA. Isso quer dizer que não temos a informação daquela variável para aquela observação.
+O símbolo `NA` (_Not Avaliable_) em R quer dizer valor faltante (_missing value_). Na coluna de valores dos investimentos há diversos `NA`. Isso quer dizer que não temos a informação daquela variável para aquela observação.
 
 ## Renomeando variáveis
 
@@ -325,6 +327,17 @@ piesp <- piesp %>%
 ```
 
 Agora nosso data frame contém apenas "ano", "valor" e "tipo". As demais colunas foram descartadas.
+
+E se quisermos selecionar todas as colunas EXCETO uma? Para isso, podemos incluir o sinal negativo ('-') antes da variável que queira excluir:
+
+``` r
+piesp %>%
+  select(-ano,
+         -valor
+         )
+```
+
+Note que podemos excluir mais de uma variável simultaneamente.
 
 ## Operador %>% para "emendar" tarefas
 

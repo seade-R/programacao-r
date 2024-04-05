@@ -38,7 +38,7 @@ dim(ticdom_dom)
 
 * A base de domicílios tem 23.592 linhas, cada uma representando um domicílio, e 65 variáveis.
 
-Há algo contra intuitivo nestas informações. Se cada domicílio pode conter mais de um indivíduo, deveríamos esperar mais unidades do segundo do que do primeiro.
+Há algo contra-intuitivo nestas informações. Se cada domicílio pode conter mais de um indivíduo, deveríamos esperar mais unidades do segundo do que do primeiro.
 
 Certamente encontraremos domicílios que não estão associados a nenhum indivíduo da base carregada -- no caso da TICDOM, esses domicílios estão associados a outras pesquisas.
 

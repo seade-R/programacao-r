@@ -64,7 +64,7 @@ Vamos produzir agora uma tabela com contagem de investimentos por CNAE e ordenad
 piesp %>% 
   group_by(cnae) %>% 
   count() %>% 
-  arrange(-n) 
+  arrange(desc(n)) 
 ```
 
 Voltaremos a falar sobre tabelas. Vamos parar agora para fazer algumas transformações na variável **cnae**.
@@ -89,7 +89,7 @@ Vamos produzir uma tabela com a nova variável:
 piesp %>% 
   group_by(divisao) %>% 
   count() %>% 
-  arrange(-n) 
+  arrange(desc(n)) 
 ```
 
 Encontramos 76 divisões nos dados de investimentos. Vamos restringir nossa análise às duas divisões com mais investimentos, 47 (comércio varejista) e 56 (alimentação). Criaremos, assim, uma nova versão dos dados apenas com as linhas de investimentos dessas duas divisões. Note que precisamos fazer uma nova atribuição para gerar essa cópia reduzida dos nossos dados.
@@ -232,6 +232,17 @@ Não precisamos trabalhar apenas com contagens ao combinarmos duas ou mais vari�
 piesp_2 %>% 
   group_by(divisao_desc, tipo) %>% 
   summarise(media_valor = mean(valor, na.rm = T))
+```
+
+Podemos criar quantas variáveis quiser dentro do `summarise()`:
+
+``` r
+piesp_2 %>% 
+  group_by(divisao_desc, tipo) %>% 
+  summarise(media_valor = mean(valor, na.rm = T),
+            mediana_valor = median(valor, na.rm = T),
+            desvio_padrao_valor = sd(valor, na.rm = T)
+  )
 ```
 
 O pivoteamento da tabela para chegarmos a uma variável na margem funciona do mesmo jeito:

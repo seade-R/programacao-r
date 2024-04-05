@@ -183,7 +183,7 @@ if (x < 0){
 print(x)
 ```
 
-A condição que o `if` deve atender vem entre parênteses. A instrução a ser atendida caso a cláusula seja verdadeira vem dentro das chaves. Aliás, é boa prática (na maioria dos casos) abrir as chaves em uma linha, escrever as instruções em outra, e fechar as chaves na linha seguinte ao final das instruções, como no exemplo. Também é boa prática "indentar", ou seja, desalinhar à esquerda com espaços, as instruções do restante do código. Falaremos sobre "estilo" em algum momento do curso. Por enquanto, apenas observe e não se assuste. Diferentemente de outras linguagens, R não requer identação para funcionar corretamente.
+A condição que o `if` deve atender vem entre parênteses. A instrução a ser atendida ca  so a cláusula seja verdadeira vem dentro das chaves. Aliás, é boa prática (na maioria dos casos) abrir as chaves em uma linha, escrever as instruções em outra, e fechar as chaves na linha seguinte ao final das instruções, como no exemplo. Também é boa prática "indentar", ou seja, desalinhar à esquerda com espaços, as instruções do restante do código. Falaremos sobre "estilo" em algum momento do curso. Por enquanto, apenas observe e não se assuste. Diferentemente de outras linguagens, R não requer identação para funcionar corretamente.
 
 Vamos agora trabalhar com um exemplo diferente. No Plano SP, que o governo do Estado de São Paulo elaborou para reabertura durante a pandemia, a taxa ocupação de leitos de UTI é um dos indicadores que determina o estágio de abertura das cidades e Departamentos Regionais de Saúde do Estado (DRS). Em nosso exemplo fictício, se a ocupação de leitos estiver acima de 80%, o DRS entra na fase vermelha.
 
@@ -268,7 +268,7 @@ while (contador <= 42) {
 }
 ```
 
-Veja que temos agora um código "aninhado", pois colocamos um condicional dentro de um loop. Novamente, combinar estruturas de código é mais um problema de lógica do que de linguagem e, se você consegue fazer no papel, consegue traduzir para R.
+Veja que temos agora um código "aninhado" (em inglês, _nested_), pois colocamos um condicional dentro de um loop. Novamente, combinar estruturas de código é mais um problema de lógica do que de linguagem e, se você consegue fazer no papel, consegue traduzir para R.
 
 ## Repetindo tarefas - `for` loop
 

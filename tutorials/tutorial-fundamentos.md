@@ -317,7 +317,7 @@ Detalhes para observarmos:
 
 ## Exercícios:
 
-Qual é a classe dos vetores abaixo? Imprima o vetor com `print()` e tente advinhar. Use a função `class()` para descobrir a resposta.
+1) Qual é a classe dos vetores abaixo? Imprima o vetor com `print()` e tente advinhar. Use a função `class()` para descobrir a resposta.
 
 ``` r
 v1 <- c(1, 2, TRUE, 4)
@@ -334,6 +334,37 @@ Você consegue identificar as regras de combinação de tipos de dados diferente
 Quando objetos de diferentes tipos são misturados, ocorre a **coerção**, para que cada elemento possua a mesma classe. Nos exemplos acima, nós vemos o efeito da coerção implícita, quando o R tenta representar todos os objetos de uma única forma.
 
 Nós podemos forçar um objeto a mudar de classe, através da coerção explícita, realizada pelas funções `as.character()`, `as.logical()` ou `as.numeric()`.
+
+2) O que acontece quando fazemos operações com objetos de classes distintas? Rode os seguintes comandos, individualmente, e veja como o R se comporta.
+
+``` r
+1 + "arroz com feijao"
+1 + "2"
+"arroz" + "feijao"
+1 / NA
+1 / 0 
+0 / 0
+(-1) ^(1/2)
+1 + TRUE
+"1" + TRUE
+0 - T
+  (TRUE + T) * FALSE 
+```
+
+Veja que quando juntamos diferentes elementos em um mesmo vetor, a **coerção** fazia com que objetos mudassem de classe. 
+
+Porém, quando tentamos fazer operações com objetos de classes distintas, o R se comporta de maneiras distintas. 
+
+Quando misturamos _logicals_ com _doubles_, por exemplo, o R interpreta essa operação, coagindo o valor _logical_ alterando-o para um valor _double_. O mesmo ocorre quando fazemos operações matemáticas com _logicals_ somente. 
+
+Já o resultado de combinar _characters_ com _doubles_/_logicals_ é diferente. Como podemos ver, o R recusa a fazer tais operações, retornando um erro.
+
+Qualquer operação feita entre _logicals_ ou _doubles_ com `NA` necessariamente retornará `NA`. Isso é uma maneira do R garantir que valores omissos não interfiram na computação de certos algoritmos.
+
+Quando tentamos fazer 1 / 0 vemos um novo valor, `Inf`, ou seja "Infinito". 
+
+Quando tentamos dividir 0 / 0, ou ainda quando tiramos a raiz quadrada de um número negativo (lembre-se: a raiz quadrada de um número é o mesmo que calcular o expoente 1/2!), o R gera um novo erro: `NaN`. Esse valor é uma abreviatura de _Not a Number_, ou seja, não há uma definição matemática para tais operações. 
+
 
 ## Operações matemáticas com vetores
 
@@ -466,22 +497,36 @@ mean(litros_cafe, na.rm = TRUE)
 
 ## Subconjunto de um vetor - parte 2
 
-É possível nomear um vetor em R com a função `names()`:
+É possível nomear um vetor em R com a função `names()`.
+
+Primeiramente vamos criar nossos objetos:
 
 ``` r
 litros_cafe <- c(4.3, 3.1, 5.3, 5.5, 6.9, 8.3, 9.7, 9.9, 9.1, 7.0, 6.2, 5.6)
 
 meses <- c("Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", 
            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
+```
 
+O que a função `names()` faz, em si, é retornar o nome atual de um vetor. Testemos isso fazendo a seguinte operação:
+
+``` r
+names(litros_cafe)
+```
+
+Veja que a função retorna o valor `NULL` (nulo). Ou seja, no momento não há nenhum valor atribuído ao nome do vetor.
+
+Como podemos mudar o nome desse vetor então? Nós já aprendemos como ainda nesse tutorial. Como vimos, a função para atribuir valores a qualquer coisa é '<-'.  Vejamos o que ocorre quando utilizamos a função de atribuição:
+
+``` r
 names(litros_cafe) <- meses
 
 litros_cafe
 ```
 
-Mas não dê muito atenção à nomeação de posições de um vetor agora, pois é pouco usual.
+Repare que a ordem do vetor `meses` foi utilizada para nomear os vetores de `litros_cafe`. Não se preocupe tanto com as posições de vetor agora, pois é pouco usual, mas é importante ter em mente como o R faz algumas operações.
 
-Vamos usar operadores relacionais (ao qual voltaremos no início do próximo tutorial) para produzir um exemplo de subconjunto mais interessante. A "Organização Mundial de Bebedores de Café", OMBC, recomenda que o consumo de café não ultrapasse o limite de até 7 litros por mês (ou seja, 7 inclusive). Vamos observar em quais meses de 2022 você tomou mais café do que deveria.
+Em tempo, vamos usar operadores relacionais (ao qual voltaremos no início do próximo tutorial) para produzir um exemplo de subconjunto mais interessante. A "Organização Mundial de Bebedores de Café", OMBC, recomenda que o consumo de café não ultrapasse o limite de até 7 litros por mês (ou seja, 7 inclusive). Vamos observar em quais meses de 2022 você tomou mais café do que deveria.
 
 Criando um vetor lógico (`TRUE` ou `FALSE`) que indique em quais meses meu consumo ultrapassou o limite recomendado:
 
@@ -497,3 +542,38 @@ litros_cafe[selecao]
 ```
 
 Para vetores pequenos, o procedimento adotado para gerar subconjuntos parece desnecessariamente trabalhoso. Mas imagine agora que você queira selecionar todos os municípios que atendam a determinada condição -- por exemplo, menos de 50 mil habitantes. Com uma variável (população) você pode gerar um vetor de seleção que permite gerar o subconjunto desejado de um _data frame_ completo. Nesse caso, com uma única linha de código, você conseguiria resolver seu problema!
+
+## Opcional
+
+Como viemos falando, a melhor forma de aprender qualquer linguagem de programação é testar na prática os limites da linguagem. Experimente ver o que acontece quando tentamos gerar nomes para um vetor de tamanho diferente do vetor de nomes.
+
+
+Mais nomes do que observações:
+
+``` r
+menos_observacoes_litros_cafe <- c(4.3, 3.1, 5.3, 5.5, 6.9, 8.3, 9.7, 9.9, 9.1, 7.0, 6.2)
+
+menos_observacoes_meses <- c("Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", 
+           "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
+
+names(menos_observacoes_litros_cafe) <- menos_observacoes_meses
+```
+
+Nesse caso, o R diretamente reporta um erro de que o tamanho dos vetores é distinto.
+
+
+Mais observações do que nomes:
+
+``` r
+menos_nomes_litros_cafe <- c(4.3, 3.1, 5.3, 5.5, 6.9, 8.3, 9.7, 9.9, 9.1, 7.0, 6.2, 5.6)
+
+menos_nomes_meses <- c("Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", 
+           "Julho", "Agosto", "Setembro", "Outubro", "Novembro")
+
+names(menos_nomes_litros_cafe) <- menos_nomes_meses
+
+names(menos_nomes_litros_cafe)
+```
+
+Nesse caso, conseguimos atribuir nomes mesmo que haja mais observações do que nomes.
+
