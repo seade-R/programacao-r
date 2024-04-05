@@ -95,7 +95,7 @@ Note que você pode escolher um arquivo na pasta local ou um URL, ou seja, um ar
 
 Cole o URL no campo "File/URL" e clique em 'Update'.
 
-A seguir, no campo "Name" digite 'piesp' (minísculo), que é um nome arbitrário que daremos aos nossos dados.
+A seguir, no campo "Name" digite 'piesp' (minúsculo), que é um nome arbitrário que daremos aos nossos dados.
 
 Finalmente, no campo "Delimiter" escolha 'Semicolon' (Ponto e vírgula). Clique em "Import".
 
