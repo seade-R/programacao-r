@@ -20,7 +20,7 @@ Neste curso, pretendemos que os participantes tenham contato direto com a lingua
 
 ## Programa
 
-[**Aula 01 (14/02)**: Entrando de cabeça](/turmas/2024_estagio_turma1/classes/class-01.md) 
+[**Aula 01 (25/04)**: Entrando de cabeça](/turmas/2024_estagio_turma1/classes/class-01.md) 
 
 Na primeira aula do curso nos habituaremos à linguagem R trabalhando com uma das gramáticas mais populares de manipulação de dados em R, a do pacote `dplyr`. O curso começa, assim, não pelos elementos básicos da linguagem R, mas pelo seu uso mais comum. Dessa forma, nos habituaremos à linguagem observando seu uso a problemas concretos.
 
@@ -35,7 +35,7 @@ Na primeira aula do curso nos habituaremos à linguagem R trabalhando com uma da
 	+ `summarise`
 	+ `arrange`
 
-[**Aula 02 (15/02)**: Alguns passos atrás, de volta aos fundamentos](/turmas/2024_estagio_turma1/classes/class-02.md) 
+[**Aula 02 (29/04)**: Alguns passos atrás, de volta aos fundamentos](/turmas/2024_estagio_turma1/classes/class-02.md) 
 
 Após termos aprendido sobre data frames, vamos fazer um percurso das funcionalidades básicas da linguagem até alguns de seus usos intermediários. O objetivo do percurso é criar um repertório de funções e utilidades da linguagem que serão utilizados adiante.
 
@@ -51,7 +51,7 @@ Após termos aprendido sobre data frames, vamos fazer um percurso das funcionali
 * Boas práticas de redação de códigos
 * Boas práticas de organização de trabalho
 
-[**Aula 03 (16/02): Manuseio de dados com o `tidyverse`**](/turmas/2024_estagio_turma1/classes/class-03.md) 
+[**Aula 03 (30/04): Manuseio de dados com o `tidyverse`**](/turmas/2024_estagio_turma1/classes/class-03.md) 
 
 Faremos o caminho de volta ao ponto de partida do curso: a manipulação de dados com a gramática do `dplyr`. Exploraremos agora aspectos diversos da manipulação de dados com mais rigor e profundidade. Além disso, veremos como trabalhar com dados relacionais em R.
 
