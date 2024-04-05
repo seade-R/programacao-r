@@ -8,8 +8,7 @@ Bem vindas e bem vindos ao curso de _Introdução à Programação e Ciência de
 * **Monitor**: André Meyer
 * **Local**: virtual
 * **Data**: 25/04/2024, 26/04/2024, 29/04/2024
-* **Horário de início**:  9h (manhã) e 12h (manhã)
-* **Horário de término**: 14h (manhã) e 17h (tarde)
+* **Horário**:  9h-12h (manhã) e 14h-17 (tarde)
 
 ## Apresentação
 
