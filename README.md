@@ -19,7 +19,7 @@ O curso foi concebido por [Leonardo S. Barone](https://github.com/leobarone), os
 * **Monitor**: André Meyer
 * **Local**: virtual
 * **Data**: 25/04/2024, 29/04/2024, 30/04/2024
-* * **Horário**:  9h-12h (manhã) e 14h-17h (tarde)
+* **Horário**:  9h-12h (manhã) e 14h-17h (tarde)
 
 Durante a duração do curso, utilizaremos um servidor auto-hospedado do RStudio especificamente configurado para facilitar a realização dos tutoriais. Por favor, verifique a caixa de entrada de seu email com o login e senha. É importante frisar que estas credenciais serão desativadas com o encerramento do curso, como medida de segurança.
 
