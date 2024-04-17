@@ -101,7 +101,7 @@ Finalmente, no campo "Delimiter" escolha 'Semicolon' (Ponto e vírgula). Clique 
 
 Esses são os únicos parâmetros que precisamos alterar ou informar para abrir a PIESP. Para outras bases pode ser necessário fazer outras modificações.
 
-Se tiver dúvidas, você pode assistir a um vídeo sobre como utilizar o botão 'Import Dataset': <https://www.youtube.com/watch?v=6y-9%60h7okH4>
+Se tiver dúvidas, você pode assistir a um vídeo (em inglês) sobre como utilizar o botão 'Import Dataset': <https://www.youtube.com/watch?v=WWY8VPh6ryo>. Alternativamente, veja este vídeo, em português, que ensina como importar arquivos Excel (lembre-se estamos usando CSVs!) para abrir arquivos através da interface de usuário: <https://www.youtube.com/watch?v=U6ksXvvY6Q0>.
 
 ## Abrindo dados em R (com script)
 
