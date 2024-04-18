@@ -389,23 +389,23 @@ Outra maneira de escrever a mesma condição seria:
 
 ``` r
 piesp1518 <- piesp %>% 
-  filter(ano >= 2015 & ano <= 2018)
+  filter(ano > 2015 & ano <= 2018)
 ```
 
-Neste caso, utilizamos `&`, que é o símbolo da conjunção "e". Dizemos, então, que queremos filtrar os anos maiores ou iguais a 2015 e menores ou iguais a 2018.
+Neste caso, utilizamos `&`, que é o símbolo da conjunção "e". Dizemos, então, que queremos filtrar os anos maiores ou iguais a 2016 e menores ou iguais a 2018.
 
 Vamos supor que queremos estabelecer agora condições para a seleção de linhas a partir de duas variáveis. Por exemplo, queremos apenas os investimentos cujo tipo é 'Implantacao' para os anos de 2016 a 2018. Novamente, precisaremos da conjunção `&`.
 
 ``` r
 piesp1518_implantacao <- piesp %>% 
-  filter(ano >= 2015 & ano <= 2018 & tipo == 'Implantacao')
+  filter(ano >= 2016 & ano <= 2018 & tipo == 'Implantacao')
 ```
 
 Ao usar duas variáveis diferentes para filter e a conjunção "e", podemos escrever o comando separando as condições por vírgula e dispensar o operador `&` (a quebra de linha é opcional):
 
 ``` r
 piesp1518_implantacao <- piesp %>% 
-  filter(ano >= 2015,
+  filter(ano >= 2016,
          ano <= 2018,
          tipo == 'Implantacao')
 ```
